@@ -1,0 +1,348 @@
+'''@file                mainpage.py
+   @brief               Page describing work done on Homework 2 and 3
+   @details             Page describing how the equations of motion for the 
+                        platform and ball system were obtained
+                        
+   @mainpage
+                        
+   @section wel         Howdy!
+                        This website serves as documentation of all labs 
+                        and projects done during the FALL of 2021 in ME 305 -
+                        Introduction to Mechatronics. If you have any questions, 
+                        please contact me at: 
+                        baronejohn00@gmail.com.
+                        
+                        The majority of assignments are focused on controlling
+                        a ball-balancing platform, which balances a ball in two 
+                        dimensions using motors to manipulate the orientation of 
+                        the platform.
+                        
+                        \image html CENG_logo.png
+                        
+   @section source      Source Code
+                        All source code for projects is available here:
+                        https://bitbucket.org/jbarone1/me305/
+                        
+   @section note        Note
+                        Please note that the full documentation for each lab is
+                        contained in a separate repository in order to allow you
+                        to see how different files evolved through the class's progression. 
+                        These repositories are linked under the tabs for each lab 
+                        in the navigation panel to the left and contain documentation
+                        for variables, classes, and functions.
+
+   \page HW2 Homework0x02
+   
+   @section analysis    Overview
+                        This analysis was performed to obtain the equations of motion for the 
+                        ball on the balancing platform. Several assumptions were made to 
+                        simplify the analysis, please refer to the images below for specifics.
+                        All work was performed by hand to obtain the equations of motion in
+                        matrix form, then MATLAB was utilized to linearize and simulate
+                        the equations in Homework 0x03.
+                        
+   @section diagrams    Analysis
+                        Please see the steps worked out by hand below to follow the analysis
+                        of the system. The finalized matrix solution has the form
+                        A x = B where x is a column vector with the state variables. 
+                        
+                        \image html HW21.jpg
+                        \image html HW22.jpg
+                        \image html HW23.jpg
+                        \image html HW24.jpg                 
+   
+   \page HW3 Homework0x03
+   
+   @section overview    Overview
+                        This homework simulated the motion of the ball and platform
+                        using the equations of motion obtained in Homework 0x02. 
+                        The EOMs were first decoupled and linearized in MATLAB, 
+                        then the system was simulated in Simulink. The results can be 
+                        viewed on the plots below.
+                        
+   @section source      Source Code
+                        The MATLAB and Simulink files used in this analysis can be viewed here:
+                        https://bitbucket.org/jbarone1/me305/src/master/HW2and3/
+                        
+   @section open        Open Loop Response
+                        The open loop response does not use feedback to control
+                        the system. The block diagram for the open loop system can 
+                        be seen below:
+
+                        \image html OL.png
+                        
+                        System response for initial condition x = 0 cm:
+                        \image html HW3_1.jpg "Ball Position and Velocity"
+                        \image html HW3_2.jpg "Platform Position and Velocity"
+                        
+                        Both of these system responses are to be expected for the 
+                        given initial condition. The ball is initially at rest
+                        perfectly centered on the platform. From a theoretical
+                        perspective, there are no disturbances that can be introduced
+                        which would drive any of the state variables away from 
+                        zero value. Thus, the system response is expected. 
+                        
+                        System response for initial condition x = 5 cm:
+                        \image html HW3_3.jpg "Ball Position and Velocity"
+                        \image html HW3_4.jpg "Platform Position and Velocity"
+                        
+                        Both of these responses are also expected. The ball is initially
+                        in an unbalanced position, and the open loop controller
+                        tries to correct this. However, with a lack of feedback, 
+                        we can see that the ball is not able to continue approaching
+                        zero and eventually rolls off the edge of the platform. 
+                        A similar response can be seen for the position and velocity
+                        of the platform.
+                        
+   @section closed      Closed Loop Response
+                        The closed loop response can be modeled using the block
+                        diagram pictured below:
+                        
+                        \image html CL.jpg
+                        
+                        System response for initial condition x = 5 cm:
+                        \image html HW3_5.jpg "Ball Position"
+                        This response is to be expected. The initial displacement
+                        of the ball from zero means that the controller attempts
+                        to move the ball back to zero. The ball oscillates around 
+                        a final zero value as the controller gets closer and closer
+                        to its target value.
+                        
+                        \image html HW3_6.jpg "Ball Velocity"
+                        This graph is logical because it is essentially the inverse
+                        of the ball position graph. Mathematically and dynamically,
+                        the ball will have the greatest velocity when the position 
+                        of the ball is near zero, a phenomenon which holds true 
+                        for this plot. The ball speed starts at an initial value
+                        of zero, quickly increases to move the ball back and forth 
+                        to the center position, and eventually comes to rest. 
+                        
+                        \image html HW3_7.jpg "Platform Position"
+                        This image allows you to observe how the platform tilts 
+                        the opposite direction of the ball in order to move it back
+                        to center. Each of the directions it tilts correspond to 
+                        opposite movement of the ball, which is what you would expect dynamically.
+                        
+                        \image html HW3_8.jpg "Platform Velocity"
+                        This graph pictures the velocity of the platform, which 
+                        is inversely proportional to the platform position, as 
+                        was the case with the ball. 
+                        
+                        
+
+    
+   \page 00 Lab0x00     
+                           
+   @section header0     Lab0x00 - Fibonacci Sequence
+                        The purpose of this lab was to gain familiarity with Python
+                        and create a script to generate the Fibonacci number given 
+                        a Fibonacci index.
+                        
+   @section source0     Source Code for Lab 0 is available here:
+                        https://bitbucket.org/jbarone1/me305/src/master/Lab%200/
+                        
+
+    
+
+   \page 01 Lab0x01
+    
+   @section header1     Lab0x01 - Getting Started with Hardware
+                        The purpose of this lab was to gain experience working 
+                        with hardware in addition to Python. 
+                        
+   @section doc1        Formal Documentation
+                        Please visit the following link for formal documentation
+                        of all files, classes, functions, and variables used in 
+                        Lab 1:
+                        https://jbarone1.bitbucket.io/Lab0x01/
+                        
+   @section source1     Source code for Lab 1 is available here:
+                        https://bitbucket.org/jbarone1/me305/src/master/Lab%201/
+                        
+   @section diagram1    State Transition Diagram and Video
+                        The state transition diagram for Lab 1 can be seen below. 
+                        It represents the different states which the script transitions
+                        through as it completes the LED task.
+                        
+                        \image html Lab1State.PNG "State Transition Diagram"
+                        
+   @section video1      Video
+                        A video demonstration of the code can be seen here: https://youtu.be/0CtW0Ivbhq0             
+
+
+
+   
+   \page 02 Lab0x02
+
+   @section header2     Lab0x02 - Incremental Encoders
+                        The purpose of this lab is to read the encoder position
+                        and record data from the encoders over a period of time. 
+                        The lab uses encoder driver and task files in order to 
+                        track changes in motor position and speed. 
+                        
+   @section doc2        Formal Documentation
+                        Please visit the following link for formal documentation
+                        of all files, classes, functions, and variables used in 
+                        Lab 2:
+                        https://jbarone1.bitbucket.io/Lab0x02/
+                        
+   @section source2     Source code for Lab 2 is available here:
+                        https://bitbucket.org/jbarone1/me305/src/master/Lab%202/
+                        
+   @section diagrams2   State Transition and Task Diagrams
+                        A link to a OneDrive folder with pdf documents of the applicable
+                        task and state transition diagrams for Lab 2 are available
+                        here:
+                        https://cpslo-my.sharepoint.com/:f:/g/personal/jbarone_calpoly_edu/EgJWo3pkMp5Jk4R3YWhTAlYBa8rI6C3ZJtjnHclHs-RhxQ
+                        
+                        \image html Lab2TaskDiagram.PNG "Task Diagram"
+                        \image html Lab2TaskEnc.PNG "Task Encoder State Transition Diagram"
+                        \image html Lab2TaskUser.PNG "Task User State Transition Diagram"
+                        
+        
+        
+        
+        
+   \page 03 Lab0x03
+   
+   @section header3     Lab0x03 - DC Motor Control
+                        The purpose of this lab is to control the DC motors in conjunction
+                        with the encoder code written in Lab 2. This lab allows 
+                        for control of the motor by altering the duty cycle, and
+                        also allows for observation of the duty cycles effect
+                        on motor position and velocity over time. 
+                        
+   @section doc3        Formal Documentation
+                        Please visit the following link for formal documentation
+                        of all files, classes, functions, and variables used in 
+                        Lab 3:
+                        https://jbarone1.bitbucket.io/Lab0x03/
+                        
+   @section source3     Source code for Lab 3 is available here:
+                        https://bitbucket.org/jbarone1/me305/src/master/Lab%203/
+                        
+   @section plots3      Motor Plots
+                        The motor plots obtained with the code written in Lab 3
+                        are pictured below. Motor position and velocity are plotted 
+                        on the same graph for a period of 30 seconds. 
+                        
+                        \image html Lab3Motor1.png
+                        \image html Lab3Motor2.png
+   
+   
+                        
+   
+   
+
+   \page 04 Lab0x04
+   
+   @section header4     Lab0x04 - Closed Loop Speed Control
+                        The purpose of this lab was to implement closed loop 
+                        speed control for the motors. I implemented a proportional
+                        controller and then tuned it for optimal performance. Eventually,
+                        this speed controller will be used to control the motion 
+                        of the platform while balancing a ball. 
+                        
+   @section doc4        Formal Documentation
+                        Please visit the following link for formal documentation
+                        of all files, classes, functions, and variables used in 
+                        Lab 4:
+                        https://jbarone1.bitbucket.io/Lab0x04/
+                        
+                        Please see below for results of the lab. 
+                        
+   @section source4     Source Code
+                        Available here:
+                        https://bitbucket.org/jbarone1/me305/src/master/Lab%204/
+   
+   @section diagrams4   Task Diagrams and Tuning Plots
+                        Task and state diagrams are used to model how different
+                        files will interact, perform, and share data. Many of the
+                        tasks run simultaneously and must perform their duties 
+                        while not intefering with other tasks. Diagrams help to 
+                        model the flow of information and structure the code.
+   
+                        See the following link for pdf documents of the state and task diagrams:
+                        https://cpslo-my.sharepoint.com/:f:/g/personal/rbullis_calpoly_edu/EjEavnIYfnRJkHtu7U88-fkB-RLXx9aTk4OoJGsVe4E2eQ?e=o9GsuX
+
+                        The motor controller performed well after tuning, as seen below:
+                            
+                        \image html Lab4BlockDiagram.png "Block diagram for the motor controller"
+                        \image html Lab4Untuned1.png "First iteration of motor tuning"
+                        \image html Lab4Untuned2.png "Second iteration of motor tuning"
+                        \image html Lab4Untuned3.png "Third iteration of motor tuning"
+                        \image html Lab4Untuned4.png "Fourth iteration of motor tuning"
+                        \image html Lab4Tuned.png "Tuned motor controller"
+                        
+                        As can be seen from the tuned motor controller plot, the
+                        proportional speed controller reaches the final target 
+                        velocity and maintains it as directed. 
+   
+    
+   \page 05 Lab0x05
+   
+   @section header5     Lab0x05 - I2C and Inertial Measurement Units
+                        The purpose of this lab was to write a driver to record 
+                        the orientation of the BNO055 IMU from Adafruit. The lab 
+                        involved demonstrating the results of our program to our 
+                        instructor. The IMU records orientation data using a 
+                        gyroscope, accelerometer, and magnetometer. 
+                        
+   @section source5     Source Code
+                        Available here:
+                        https://jbarone1.bitbucket.io/Lab0x05/
+                        
+   \page 06 TermProject
+   
+   @section header6     Term Project - Ball Balancing Platform
+                        The purpose of this project was to combine all previous
+                        work in the class and balance a ball on the robotic platform. 
+                        This project also involved tuning the platform to produce
+                        acceptable performance. We were not able to tune the 
+                        controller finely enough to balance the ball for more than 
+                        a few seconds, but our platform responds correctly to the 
+                        ball and is also capable of holding itself level. 
+                        
+   @section source6     Source Code
+                        Available here:
+                        https://bitbucket.org/jbarone1/me305/src/master/Lab6/
+                        
+   @section doc6        Formal Documentation
+                        Formal documentation available here: 
+                        https://jbarone1.bitbucket.io/TermProject/
+                        
+   @section video6      Video
+                        https://youtu.be/i6BJ9eg-HtQ \n
+                        
+                        Provided is a link to a video demonstration of our project. 
+                        You can see that the ball responds to external forces on 
+                        the platform, holding itself level, and also correctly reponds
+                        to placement of the ball. Given slightly more time to tune 
+                        our controller, the platform would be able to balance the 
+                        ball indefinitely. Our software also has the ability to 
+                        enable or disable the platform, and can record data for
+                        the ball and platform positions and velocities.
+                        
+   @section plots6      Plots
+                        Below are plots collected by our data task. The plots show
+                        that the platform is responding properly to the ball input, 
+                        and showcase the dynamics of the system. 
+                        
+                        \image html TermProject1.png
+                        \image html TermProject2.png
+                        
+   @section diagram6    Diagrams
+                        Below are the diagrams for the term project. The task diagram
+                        shows how the different tasks interact through cooperative multitasking,
+                        and the state transition diagram shows the logic of the 
+                        task_user FSM.
+                        
+                        \image html Lab4Task.png "Task Diagram"
+                        \image html FinalState.jpg "State Transition Diagram"
+   
+   
+   @author              Ryker Bullis
+   @author              Jack Barone
+   
+   @date                December 7, 2021
+'''
