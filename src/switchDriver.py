@@ -21,7 +21,9 @@ class switchDriver:
      
     def getValue(self)
         '''!
-        Updates the driver so that 
+        Reads the limit switch
+        @returns A boolean that is true when the switch is hit
+        and false when the switch is not hit
         '''
         return pinSwitchPin.value()
         
