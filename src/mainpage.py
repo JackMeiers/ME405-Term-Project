@@ -1,4 +1,4 @@
-'''@file                mainpage.py
+'''!@file                mainpage.py
    @brief               Page describing work for final project in ME405
    @details             Desribes the details of the arm pen plotter used
                         to draw an given image
