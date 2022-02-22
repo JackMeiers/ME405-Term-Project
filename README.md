@@ -22,7 +22,7 @@ so we will use either the bench power supply or a 12V battery to provide power t
 |  1   | H bridge Motor Driver | Personal              |     -     | 
 
 ### Sketch
-![Sketch go here](./sketch.png)
+![Sketch go here](./sketch.PNG)
 
 ### Referenced Diagram
 ![Diagram go here](./diagram.png)
