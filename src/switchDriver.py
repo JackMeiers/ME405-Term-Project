@@ -8,22 +8,23 @@ ticks of the encoder
 @date 22-Feb-2022 
 '''
 import pyb
+import encoderDriver
+
 class switchDriver:
     '''!
     '''
-    def __init__(self, switchPin)
+    def __init__(self, switchPin, enc)
         '''!
         Creates an switch driver by initializing GPIO
         '''
-        self.period = 4000 - 1
-        self.pinSwitchPin = pyb.Pin (switchPin, pyb.Pin.IN, )        
-        self.tim = pyb.Timer (timer, prescaler=0, freq=20000)
-        self.ch1 = self.tim.channel (1, pyb.Timer.ENC_A, pin=self.pinIN1)
-        self.ch2 = self.tim.channel (2, pyb.Timer.ENC_B, pin=self.pinIN2)
-        self.count = 0
-        self.lastCount = 0
-        self.position = 0
-        self.delta = 0
+        self.pinSwitchPin = pyb.Pin(switchPin, pyb.Pin.IN, pyb.Pin.PULL_DOWN)
+     
+    def getValue(self)
+        '''!
+        Updates the driver so that 
+        '''
+        return pinSwitchPin.value()
+        
 
 
     

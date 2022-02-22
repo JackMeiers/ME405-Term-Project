@@ -26,6 +26,7 @@ def task0_encoder ():
     switch = switchDriver(pyb.Pin.board.PB6)
     while True:
         
+        yield (0)
 
 def task1_encoder ():
     """!
@@ -34,6 +35,8 @@ def task1_encoder ():
     """
     enc = encoderDriver.EncoderDriver(pyb.Pin.board.PB6,pyb.Pin.board.PB7, 4)
     while True:
+        if(share_enc1.get() == 0)
+            enc.zero()
         enc.update()
         share_enc1.put(enc.read())
         yield (0)
