@@ -13,7 +13,7 @@ import encoderDriver
 class switchDriver:
     '''!
     '''
-    def __init__(self, switchPin, enc)
+    def __init__(self, switchPin)
         '''!
         Creates an switch driver by initializing GPIO
         '''
