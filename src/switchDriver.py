@@ -10,23 +10,21 @@ ticks of the encoder
 import pyb
 import encoderDriver
 
-class switchDriver:
+class SwitchDriver:
     '''!
     '''
-    def __init__(self, switchPin)
+    def __init__(self, switchPin):
         '''!
         Creates an switch driver by initializing GPIO
         '''
-        self.pinSwitchPin = pyb.Pin(switchPin, pyb.Pin.IN, pyb.Pin.PULL_DOWN)
-     
-    def getValue(self)
+        self.switchPin = pyb.Pin(switchPin, pyb.Pin.IN, pyb.Pin.PULL_DOWN)
+        
+    def getValue(self):
         '''!
         Reads the limit switch
-        @returns A boolean that is true when the switch is hit
-        and false when the switch is not hit
+        @returns A boolean that is 0 when the switch is hit
+        and 1 when the switch is not hit
         '''
-        return pinSwitchPin.value()
+        return self.switchPin.value()
         
 
-
-    

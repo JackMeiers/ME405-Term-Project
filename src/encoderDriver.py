@@ -76,5 +76,10 @@ class EncoderDriver:
         self.position = 0
         return 0
         
+def degree_to_enc(degree):
+    '''!
+    Converts a degree measurement to encoder ticks
+    '''
+    return degree * 8192 / 360
 
         
