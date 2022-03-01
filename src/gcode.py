@@ -1,3 +1,6 @@
+#import task_share
+import math as m
+
 '''!
 @file gcode.py
 Contains definitions for G code instruction object and basic translation functions.
@@ -8,14 +11,9 @@ Contains definitions for G code instruction object and basic translation functio
 @date 22-Feb-2022 
 '''
 
+# conversion to have each step run in .1s.
+FEED_CONVERSION = 0.001666
 
-"""
-Short G-Code summary:
-G00 - full-speed direct translation.
-G01 - linear motion.
-G02 - clockwise arc.
-G03 - c-clockwise arc.
-"""
 class g_code_instruction:
     '''! Defines a basic structure for holding G code instructions.
     '''
@@ -24,7 +22,7 @@ class g_code_instruction:
         @param line String containing a single line of G code.
         '''
         self.n = 0
-        self.g = 0
+        self.g = -1
         self.x = 0
         self.y = 0
         self.z = 0
@@ -45,22 +43,19 @@ class g_code_instruction:
                 self.g = int(blocks[i].replace('G', ''))
                 continue
             if blocks[i].startswith('X'): # X coordinate.
-                self.x = int(blocks[i].replace('X', ''))
+                self.x = float(blocks[i].replace('X', ''))
                 continue
             if blocks[i].startswith('Y'): # Y coordinate.
-                self.y = int(blocks[i].replace('Y', ''))
-                continue
-            if blocks[i].startswith('Z'): # Z coordinate.
-                self.z = int(blocks[i].replace('Z', ''))
+                self.y = float(blocks[i].replace('Y', ''))
                 continue
             if blocks[i].startswith('I'): # X offset for arcs.
-                self.i = int(blocks[i].replace('I', ''))
+                self.i = float(blocks[i].replace('I', ''))
                 continue
             if blocks[i].startswith('J'): # Y offset for arcs.
-                self.j = int(blocks[i].replace('J', ''))
+                self.j = float(blocks[i].replace('J', ''))
                 continue
             if blocks[i].startswith('R'): # radius for arcs.
-                self.r = int(blocks[i].replace('R', ''))
+                self.r = float(blocks[i].replace('R', ''))
                 continue
             if blocks[i].startswith('F'): # Feed rate instructions.
                 self.f = int(blocks[i].replace('F', ''))
@@ -68,9 +63,16 @@ class g_code_instruction:
             if blocks[i].startswith('M'): # Use for enabling functions.
                 self.m = int(blocks[i].replace('M', ''))
                 continue
-
+            if blocks[i].startswith('P'): # Timing.
+                self.p = float(blocks[i].replace('P', ''))
+                continue
         # self.s # Spindle speed. Unused.
         # self.t # Tool commands. Shouldn't be necessary.
+        
+        def isRepeat():
+            '''! Returns whether the instruction is a repeat of previous instruction.
+            '''
+            return self.g == -1 and (self.x != 0 or self.y != 0 or self.i != 0 or self.j != 0 or self.r != 0)
 
 
 def get_instructions(filepath):
@@ -89,18 +91,260 @@ def get_instructions(filepath):
     
     print("-I- Reading G code... Done!")
     return instructions
+
+'''!
+    @param instruction The instruction to be run.
+    @param position The current position of the pen.
+    @param feed_task The share storing the current feed rate.
+    @param pos_task The share storing the coordinate system setting.
+    @param last_g The share with the g code of the last operation run.
+'''
+def execute(instruction, position, feed_task, pos_task, last_g): 
+    # G codes.
+    # Operations.
+    if (instruction.f != 0):
+        feed_task.put(instruction.f)
     
+    if (instruction.isRepeat()): # repeat last instruction w/ new x,y,i,j
+        if (last_g==-1):
+            print("Error: bad g code formatting")
+        instruction.g = last_g
+        
+    if (instruction.g == 0): # full speed translation.
+        # Convert from relative to absolute if necessary.
+        if (pos_task.get() == 0):
+            abs_point = abs_to_rel(position, instruction.x, instruction.y)
+            instruction.x = abs_point[0]
+            instruction.y = abs_point[1]
+        
+        linear(pos, instruction.x, instruction.y)
+    elif (instruction.g == 1): # linear translation.
+        # Convert from relative to absolute if necessary.
+        if (pos_task.get() == 0):
+            abs_point = abs_to_rel(position, instruction.x, instruction.y)
+            instruction.x = abs_point[0]
+            instruction.y = abs_point[1]
+        
+        linear(position, instruction.x, instruction.y, feed_rate)
+
+    elif (instruction.g == 2 or instruction.g == 3): # cw or ccw arc.
+        direction = instruction.g % 2
+        # Convert from relative to absolute if necessary.
+        if (pos_task.get() == 0):
+            abs_point = abs_to_rel(position, instruction.x, instruction.y)
+            instruction.x = abs_point[0]
+            instruction.y = abs_point[1]
+        
+        if (r!=0):
+            arcr(position, direction, instructions.r, feed_rate, instructions.x, instructions.y)
+        else:
+            arc(position, direction, instructions.i, instructions.j, feed_rate, instructions.x, instructions.y)
+
+    elif (instruction.g == 12 or instruction.g == 13): # cw or ccw circle.
+        direction = instruction.g % 12
+        if (r!=0):
+            arc(position, direction, instructions.r, feed_rate)
+        else:
+            arc(position, direction, instruction.i, instruction.j, feed_rate)
+          
+    elif (instruction.g == 28): # zero return.
+        zero()
+    #else if (instruction.g == 9): # exact stop.
+    
+    elif (instruction.g == 4): # dwell.
+        sleep(instruction.p)
+    # Change settings.
+    if (pos_share is not None and (instruction.g == 90 or instruction.g == 91)):
+        # G90 = absolute positioning, G91 is relative positioning.
+        pos_share.put(instruction.g % 90)
+    
+    #if (unit_share is not None and (instruction.g == 20 or instruction.g == 21)):
+    #    # G20 = inches, G21 = cm
+    #    unit_share.put(instruction.g % 20)
+        
+    # M codes.
+    if (instruction.m == 30): # signal program end w/ reset.
+        # put settings back to default and zero.
+        reset()
+        # exit.
+        shutdown()
+
+    elif (instruction.m == 2): # program end.
+        shutdown()
+
+    elif (instruction.m == 0): # pause execution.
+        pause()
+        
+    elif (instruction.m == 3 or instruction.m == 4): # put pen down.
+        pen()
+
+    elif (instruction.m == 5): # pull pen up.
+        pen(False)
+
+    elif (instruction.m == 47): # repeat from first line.
+        # put settings to default and zero.
+        reset()
+        # reload instructions and restart.
+        restart()
+
+def distance(start, end):
+    delta_x = end[0] - start[0]
+    delta_y = end[1] - start[1]
+
+    return m.sqrt(pow(delta_x,2) + pow(delta_y,2))
+
+def linear(pos, x_rel, y_rel, feed=-1):
+    start_point = pos
+    end_point = (pos[0] + x_rel, pos[1] + y_rel)
+    points = [apply_offset(end_point)]
+    
+    distance1 = distance(start_point, end_point)
+    
+    if (feed != -1):
+        step = feed * FEED_CONVERSION
+    else:
+        return points
+    
+    u = ((end_point[0] - start_point[0])/distance1, (end_point[1] - start_point[1])/distance1)
+    
+    d = step
+    while d < distance1:
+        new_point = (start_point[0] + u[0] * d, start_point[1] + u[1] * d)
+        points.insert(-1,apply_offset(new_point))
+
+        d += step
+    
+    return points
+
+def arc(pos, direction, i, j, feed, x_rel=0, y_rel=0):
+    start_point = pos
+    end_point = (pos[0] + x_rel, pos[1] + y_rel)
+    center_point = (pos[0] + i,pos[1] + j)
+    if (direction == 0): # map directions
+        direction = -1
+    
+    step = feed * FEED_CONVERSION
+    radius = distance(start_point, center_point)
+    
+    points = [apply_offset(end_point)]
+
+    # offset from 0 radians to starting point
+    offset = m.pi + m.atan(j/i)
+    
+    # If start and end points are the same, draw a full circle.
+    if (x_rel == 0 and y_rel == 0):
+        angle = 2 * m.pi
+    else:
+        angle = m.acos((i * (i - x_rel)+ j * (j - y_rel))/m.pow(radius,2))
+        if (direction == 1):
+            angle = 2 * m.pi - angle
+    
+    # calculate total length to travel.
+    arc_length = radius * angle
+    d = step
+    while d < arc_length:
+        theta = direction * d / radius
+        x = radius * m.cos(theta + offset) + center_point[0]
+        y = radius * m.sin(theta + offset) + center_point[1]
+        points.insert(-1, apply_offset((x,y)))
+        d += step
+          
+    return points
+
+def find_j(r,x,y):
+    scale = 1
+    if (r < 0):
+        scale = -1
+    r = abs(r)
+    root = 4 * pow(r,2) * pow(x,4) + 4 * pow(r,2) * pow(x,2) * pow(y,2) - pow(x,6) - 2 * pow(x,4) * pow(y,2) - pow(x,2) * pow(y,4)
+    num = scale * m.sqrt(root) + pow(x,2) * y + pow(y,3)
+    denom = 2 * (pow(x,2) + pow(y,2))
+    
+    return num/denom
+
+def find_i(r,j):
+    return m.sqrt(pow(r,2) - pow(j,2))
+
+    
+def arcr(pos, direction, r, feed, x_rel=0, y_rel=0):
+    start_point = pos
+    end_point = (pos[0] + x_rel, pos[1] + y_rel)
+    if (direction == 0): # map directions
+        direction = -1
+        
+    step = feed * FEED_CONVERSION
+    points = [apply_offset(end_point)]
+    if(x_rel != 0 or y_rel != 0):
+        j = find_j(r, x_rel, y_rel)
+        i = find_i(r, j)
+    else:
+        j = r
+        i = 0
+    print("i: " + str(i) + ", j: " + str(j))
+    center_point = (pos[0] + i, pos[1] + j)
+    if i == 0:
+        i = 0.00000000001
+    offset = m.pi + m.atan(j/i)
+    if (r < 0):
+        # Choose long arc
+        r = abs(r)
+    else:
+        # Choose short arc
+        r = r
+    
+    if (x_rel == 0 and y_rel == 0):
+        angle = 2 * m.pi
+    else:
+        angle = m.acos((i * (i - x_rel)+ j * (j - y_rel))/m.pow(r,2))
+        if (direction == 1):
+            angle = 2 * m.pi - angle
+    
+    # calculate total length to travel.
+    arc_length = r * angle
+    d = step
+    while d < arc_length:
+        theta = direction * d / r
+        x = r * m.cos(theta + offset) + center_point[0]
+        y = r * m.sin(theta + offset) + center_point[1]
+        points.insert(-1, apply_offset((x,y)))
+        d += step
+          
+    return points
+        
+
+def pen(down=True):
+    # drop pen
+    return
+
+def pause():
+    return
+
+def reset(position):
+    zero(position)
+    
+def zero():
+    return
+    
+def shutdown():
+    pen(False)
+    zero()
+    return
+    
+def restart():
+    return
+    
+def abs_to_rel(current_pos, x, y):
+    return (x - current_pos[0], y - current_pos[1])
+
+def rel_to_abs(current_pos, x, y):
+    return (current_pos[0] + x, current_pos[1] + y)
+
+def apply_offset(point):
+    return (point[0], point[1] + 8)
 
 if __name__ == "__main__":
-    # Test translation
-    instr = get_instructions("../sample2.nc")
-    for ins in instr:
-        print("\n\n")
-        print("N: " + str(ins.n) + "\n")
-        print("G: " + str(ins.g) + "\n")
-        print("X: " + str(ins.x) + "\n")
-        print("Y: " + str(ins.y) + "\n")
-        print("Z: " + str(ins.z) + "\n")
-        print("I: " + str(ins.i) + "\n")
-        print("J: " + str(ins.j) + "\n")
-
+    # debug code
+    #points = linear((2,2), 1, 3, 60)
+    points = arcr((2,2),0, 1.4, 60, 2, 0)
+    for i in points:
+        print("x: " + str(i[0]) + " y: " + str(i[1]) + "\n")
