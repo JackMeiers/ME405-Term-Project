@@ -69,11 +69,17 @@ class g_code_instruction:
         # self.s # Spindle speed. Unused.
         # self.t # Tool commands. Shouldn't be necessary.
         
-        def isRepeat():
-            '''! Returns whether the instruction is a repeat of previous instruction.
-            '''
-            return self.g == -1 and (self.x != 0 or self.y != 0 or self.i != 0 or self.j != 0 or self.r != 0)
+    def isRepeat(self):
+        '''! Returns whether the instruction is a repeat of previous instruction.
+        '''
+        return self.g == -1 and (self.x != 0 or self.y != 0 or self.i != 0 or self.j != 0 or self.r != 0)
 
+
+class g_code_settings:
+    def __init__(self):
+        self.feed_rate = 60
+        self.absolute = 0
+        self.last_g = -1
 
 def get_instructions(filepath):
     '''! Opens a g code file and gets a list of all the instructions.
@@ -89,8 +95,15 @@ def get_instructions(filepath):
         # Get instruction, add to list.
         instructions.append(g_code_instruction(line))
     
+    positions = []
+    settings = g_code_settings()
+    positions += zero()
+    for instr in instructions:
+        test = execute(instr, positions[-1], settings)
+        positions += test
+    
     print("-I- Reading G code... Done!")
-    return instructions
+    return positions
 
 '''!
     @param instruction The instruction to be run.
@@ -99,75 +112,19 @@ def get_instructions(filepath):
     @param pos_task The share storing the coordinate system setting.
     @param last_g The share with the g code of the last operation run.
 '''
-def execute(instruction, position, feed_task, pos_task, last_g): 
+def execute(instruction, position, settings): 
     # G codes.
     # Operations.
     if (instruction.f != 0):
-        feed_task.put(instruction.f)
+        settings.feed_rate = instruction.f
     
-    if (instruction.isRepeat()): # repeat last instruction w/ new x,y,i,j
-        if (last_g==-1):
-            print("Error: bad g code formatting")
-        instruction.g = last_g
-        
-    if (instruction.g == 0): # full speed translation.
-        # Convert from relative to absolute if necessary.
-        if (pos_task.get() == 0):
-            abs_point = abs_to_rel(position, instruction.x, instruction.y)
-            instruction.x = abs_point[0]
-            instruction.y = abs_point[1]
-        
-        linear(pos, instruction.x, instruction.y)
-    elif (instruction.g == 1): # linear translation.
-        # Convert from relative to absolute if necessary.
-        if (pos_task.get() == 0):
-            abs_point = abs_to_rel(position, instruction.x, instruction.y)
-            instruction.x = abs_point[0]
-            instruction.y = abs_point[1]
-        
-        linear(position, instruction.x, instruction.y, feed_rate)
-
-    elif (instruction.g == 2 or instruction.g == 3): # cw or ccw arc.
-        direction = instruction.g % 2
-        # Convert from relative to absolute if necessary.
-        if (pos_task.get() == 0):
-            abs_point = abs_to_rel(position, instruction.x, instruction.y)
-            instruction.x = abs_point[0]
-            instruction.y = abs_point[1]
-        
-        if (r!=0):
-            arcr(position, direction, instructions.r, feed_rate, instructions.x, instructions.y)
-        else:
-            arc(position, direction, instructions.i, instructions.j, feed_rate, instructions.x, instructions.y)
-
-    elif (instruction.g == 12 or instruction.g == 13): # cw or ccw circle.
-        direction = instruction.g % 12
-        if (r!=0):
-            arc(position, direction, instructions.r, feed_rate)
-        else:
-            arc(position, direction, instruction.i, instruction.j, feed_rate)
-          
-    elif (instruction.g == 28): # zero return.
-        zero()
-    #else if (instruction.g == 9): # exact stop.
-    
-    elif (instruction.g == 4): # dwell.
-        sleep(instruction.p)
-    # Change settings.
-    if (pos_share is not None and (instruction.g == 90 or instruction.g == 91)):
-        # G90 = absolute positioning, G91 is relative positioning.
-        pos_share.put(instruction.g % 90)
-    
-    #if (unit_share is not None and (instruction.g == 20 or instruction.g == 21)):
-    #    # G20 = inches, G21 = cm
-    #    unit_share.put(instruction.g % 20)
-        
     # M codes.
     if (instruction.m == 30): # signal program end w/ reset.
         # put settings back to default and zero.
-        reset()
+        return zero()
+        #reset()
         # exit.
-        shutdown()
+        #shutdown()
 
     elif (instruction.m == 2): # program end.
         shutdown()
@@ -186,6 +143,72 @@ def execute(instruction, position, feed_task, pos_task, last_g):
         reset()
         # reload instructions and restart.
         restart()
+    
+    if (instruction.isRepeat()): # repeat last instruction w/ new x,y,i,j
+        if (last_g==-1):
+            print("Error: bad g code formatting")
+        instruction.g = last_g
+        
+    if (instruction.g == 0): # full speed translation.
+        # Convert from relative to absolute if necessary.
+        last_g = 0
+        #if (pos_task == 0):
+            # abs_point = abs_to_rel(position, instruction.x, instruction.y)
+            #instruction.x = abs_point[0]
+            #instruction.y = abs_point[1]
+        
+        return linear(position, instruction.x, instruction.y)
+    elif (instruction.g == 1): # linear translation.
+        # Convert from relative to absolute if necessary.
+        last_g = 1
+        if (settings.absolute == 0):
+            abs_point = abs_to_rel(position, instruction.x, instruction.y)
+            instruction.x = abs_point[0]
+            instruction.y = abs_point[1]
+        
+        return linear(position, instruction.x, instruction.y, settings.feed_rate)
+
+    elif (instruction.g == 2 or instruction.g == 3): # cw or ccw arc.
+        settings.last_g == instruction.g
+        direction = instruction.g % 2
+        # Convert from relative to absolute if necessary.
+        #if (pos_task == 0):
+        #    abs_point = abs_to_rel(position, instruction.x, instruction.y)
+        #    instruction.x = abs_point[0]
+        #    instruction.y = abs_point[1]
+        
+        if (instruction.r!=0):
+            return arcr(position, direction, instruction.r, settings.feed_rate, instruction.x, instruction.y)
+        else:
+            return arc(position, direction, instruction.i, instruction.j, settings.feed_rate, instruction.x, instruction.y)
+
+    elif (instruction.g == 12 or instruction.g == 13): # cw or ccw circle.
+        last_g = instruction.g
+        direction = instruction.g % 12
+        if (instruction.r!=0):
+            return arcr(position, direction, instruction.r, settings.feed_rate)
+        else:
+            return arc(position, direction, instruction.i, instruction.j, settings.feed_rate)
+          
+    elif (instruction.g == 28): # zero return.
+        return zero()
+    #else if (instruction.g == 9): # exact stop.
+    
+    elif (instruction.g == 4): # dwell.
+        points = []
+        for i in range(instruction.p * 10):
+            points.append(position)
+        return points
+    # Change settings.
+    if (instruction.g == 90 or instruction.g == 91):
+        # G90 = absolute positioning, G91 is relative positioning.
+        pos_share = instruction.g % 90
+    
+    #if (unit_share is not None and (instruction.g == 20 or instruction.g == 21)):
+    #    # G20 = inches, G21 = cm
+    #    unit_share.put(instruction.g % 20)
+    return []
+        
 
 def distance(start, end):
     delta_x = end[0] - start[0]
@@ -196,7 +219,7 @@ def distance(start, end):
 def linear(pos, x_rel, y_rel, feed=-1):
     start_point = pos
     end_point = (pos[0] + x_rel, pos[1] + y_rel)
-    points = [apply_offset(end_point)]
+    points = [end_point]
     
     distance1 = distance(start_point, end_point)
     
@@ -210,7 +233,7 @@ def linear(pos, x_rel, y_rel, feed=-1):
     d = step
     while d < distance1:
         new_point = (start_point[0] + u[0] * d, start_point[1] + u[1] * d)
-        points.insert(-1,apply_offset(new_point))
+        points.insert(-1,new_point)
 
         d += step
     
@@ -226,16 +249,20 @@ def arc(pos, direction, i, j, feed, x_rel=0, y_rel=0):
     step = feed * FEED_CONVERSION
     radius = distance(start_point, center_point)
     
-    points = [apply_offset(end_point)]
+    points = [end_point]
 
     # offset from 0 radians to starting point
+    if (i == 0):
+        i = 0.0000001
     offset = m.pi + m.atan(j/i)
     
     # If start and end points are the same, draw a full circle.
     if (x_rel == 0 and y_rel == 0):
         angle = 2 * m.pi
     else:
-        angle = m.acos((i * (i - x_rel)+ j * (j - y_rel))/m.pow(radius,2))
+        i_comp = i * (i - x_rel)
+        j_comp = j * (j - y_rel)
+        angle = m.acos((i_comp + j_comp)/m.pow(radius,2))
         if (direction == 1):
             angle = 2 * m.pi - angle
     
@@ -246,7 +273,7 @@ def arc(pos, direction, i, j, feed, x_rel=0, y_rel=0):
         theta = direction * d / radius
         x = radius * m.cos(theta + offset) + center_point[0]
         y = radius * m.sin(theta + offset) + center_point[1]
-        points.insert(-1, apply_offset((x,y)))
+        points.insert(-1, (x,y))
         d += step
           
     return points
@@ -320,10 +347,10 @@ def pause():
     return
 
 def reset(position):
-    zero(position)
+    return zero(position)
     
 def zero():
-    return
+    return [(0,0)]
     
 def shutdown():
     pen(False)
@@ -339,12 +366,13 @@ def abs_to_rel(current_pos, x, y):
 def rel_to_abs(current_pos, x, y):
     return (current_pos[0] + x, current_pos[1] + y)
 
-def apply_offset(point):
-    return (point[0], point[1] + 8)
+#def apply_offset(point):
+#    return (point[0], point[1] + 8)
 
 if __name__ == "__main__":
     # debug code
-    #points = linear((2,2), 1, 3, 60)
-    points = arcr((2,2),0, 1.4, 60, 2, 0)
+    # points = linear((2,2), 1, 3, 60)
+    # points = arcr((2,2),0, 1.4, 60, 2, 0)
+    points = get_instructions("../sample3.nc")
     for i in points:
         print("x: " + str(i[0]) + " y: " + str(i[1]) + "\n")
