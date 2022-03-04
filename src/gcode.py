@@ -309,7 +309,7 @@ def arcr(pos, direction, r, feed, x_rel=0, y_rel=0):
     else:
         j = r
         i = 0
-    print("i: " + str(i) + ", j: " + str(j))
+    #print("i: " + str(i) + ", j: " + str(j))
     center_point = (pos[0] + i, pos[1] + j)
     if i == 0:
         i = 0.00000000001
@@ -368,8 +368,8 @@ def abs_to_rel(current_pos, x, y):
 def rel_to_abs(current_pos, x, y):
     return (current_pos[0] + x, current_pos[1] + y)
 
-#def apply_offset(point):
-#    return (point[0], point[1] + 8)
+def apply_offset(point):
+    return (point[0] + 0.625, point[1] + 8)
 
 if __name__ == "__main__":
     # debug code

@@ -28,19 +28,21 @@ def convertToEncoderAngles(x, y):
     L2 = 10
     L1 = 9.8 
     edge_c = sqrt(x**2+y**2)
-    print("c: ", edge_c)
+    #print("c: ", edge_c)
     edge_e = sqrt((D-x)**2 + y**2)
-    print("e: ",edge_e)
+    #print("e: ",edge_e)
     delta = atan(y/x)
-    print("Delta :", delta)
-    epsilon = arccos((edge_e**2 - L2**2 + L1**2)/(2*L1*edge_c))
-    print("Epsilon :", epsilon)
-    phi = arccos((edge_c**2 - L2**2 + L1**2)/(2*L1*edge_c))
-    print("Phi :", phi)
+    #print("Delta :", delta)
+    epsilon = acos((edge_e**2 - L2**2 + L1**2)/(2*L1*edge_c))
+    #print("Epsilon :", epsilon)
+    phi = acos((edge_c**2 - L2**2 + L1**2)/(2*L1*edge_c))
+    #print("Phi :", phi)
     psi = atan(y/(D - x))
-    print("Epsilon :", psi)
-    alpha = pi - delta - phi
-    beta = pi - psi - epsilon
+    #print("Psi :", psi)
+    alpha = pi - (delta + phi) % pi
+    beta = pi - (psi + epsilon) % pi
+    #print("ALPHA,BETA: ", end='')
+    #print(alpha,beta)
     return (alpha, beta)
     
     
@@ -58,6 +60,10 @@ def arccos(radians):
         return -(pi)
     else:
         return acos(radians)
+    
+if __name__ == "__main__":
+            radians = convertToEncoderAngles(3 + .625, 3 + 8)
+            print(radians[0] * 180 / pi, radians[1] * 180 / pi)
     
     
     
