@@ -103,6 +103,8 @@ def get_instructions(filepath):
         positions += test
     
     print("-I- Reading G code... Done!")
+    #for i in range(0,len(positions)-1):
+    #    positions[i] = apply_offset(positions[i][0], positions[i][1])
     return positions
 
 '''!
@@ -300,7 +302,7 @@ def arcr(pos, direction, r, feed, x_rel=0, y_rel=0):
         direction = -1
         
     step = feed * FEED_CONVERSION
-    points = [apply_offset(end_point)]
+    points = [end_point]
     if(x_rel != 0 or y_rel != 0):
         j = find_j(r, x_rel, y_rel)
         i = find_i(r, j)
@@ -333,7 +335,7 @@ def arcr(pos, direction, r, feed, x_rel=0, y_rel=0):
         theta = direction * d / r
         x = r * m.cos(theta + offset) + center_point[0]
         y = r * m.sin(theta + offset) + center_point[1]
-        points.insert(-1, apply_offset((x,y)))
+        points.insert(-1, (x,y))
         d += step
           
     return points
@@ -373,6 +375,6 @@ if __name__ == "__main__":
     # debug code
     # points = linear((2,2), 1, 3, 60)
     # points = arcr((2,2),0, 1.4, 60, 2, 0)
-    points = get_instructions("../sample3.nc")
+    points = get_instructions("../balloon.nc")
     for i in points:
         print("x: " + str(i[0]) + " y: " + str(i[1]) + "\n")
