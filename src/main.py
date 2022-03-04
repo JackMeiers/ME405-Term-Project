@@ -21,27 +21,23 @@ import utime
 import switchDriver
 import servoDriver
 import kinematics
+import gcode
+from math import pi
 
 def task0_master ():
     """!
     Takes and converts GCode and passes to to program for drawing device
     """
-    i = True
+    points = gcode.get_instructions("sample3.nc")
     while True:
-        if i:
-            for angle in range(0,20,1):
-                print(angle)
-                share_degree1.put(angle)
-                share_degree2.put(angle)
-                yield(0)
-            i = False
-        else:
-            for angle in range(20,0,-1):
-                print(angle)
-                share_degree1.put(angle)
-                share_degree2.put(angle)
-                yield(0)
-            i = True
+        for point in points:
+             print("X-Y: ",end="")
+             print(gcode.apply_offset(point)[0],gcode.apply_offset(point)[1])
+             angles = kinematics.convertToEncoderAngles(gcode.apply_offset(point)[0],gcode.apply_offset(point)[1])
+             print(angles[0] * 180 / pi, angles[1] * 180 / pi)
+             share_degree1.put(angles[0] * 180 / pi)
+             share_degree2.put(angles[1] * 180 / pi)
+             yield(0)
 
 def task1_encoder1 ():
     """!
@@ -80,7 +76,7 @@ def task3_control1 ():
     analysis
     """
     #starts off at 5 degrees
-    controller = controls.Controls(-16092, 1500/8192, 0)
+    controller = controls.Controls(-16092, 3000/8192, 0)
     while True:
         controller.set_setpoint(-encoderDriver.degree_to_enc(share_degree1.get(), (7 / 2)))
         share_motor1.put(controller.controlLoop(share_enc1.get()))
@@ -133,7 +129,7 @@ def task6_control2 ():
     analysis
     """
     #starts off at 5 degrees
-    controller = controls.Controls(16092, 1500/8192, 0)
+    controller = controls.Controls(16092, 3000/8192, 0)
     while True:
         controller.set_setpoint(encoderDriver.degree_to_enc(share_degree2.get(), (7/2)))
         share_motor2.put(controller.controlLoop(share_enc2.get()))
