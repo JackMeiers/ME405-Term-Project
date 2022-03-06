@@ -144,9 +144,9 @@ def execute(instruction, position, settings):
         return [(0,0, settings.pen)]
     
     if (instruction.isRepeat()): # repeat last instruction w/ new x,y,i,j
-        if (last_g==-1):
+        if (settings.last_g==-1):
             print("Error: bad g code formatting")
-        instruction.g = last_g
+        instruction.g = settings.last_g
         
     if (instruction.g == 0 or instruction.g == 1): # full speed translation.
         # Convert from relative to absolute if necessary.
@@ -178,9 +178,9 @@ def execute(instruction, position, settings):
         settings.last_g = instruction.g
         direction = instruction.g % 12
         if (instruction.r!=0):
-            return arcr(position, direction, instruction.r, settings.feed_rate)
+            return arcr(position, direction, instruction.r, settings.pen, settings.feed_rate)
         
-        return arc(position, direction, instruction.i, instruction.j, settings.feed_rate)
+        return arc(position, direction, instruction.i, instruction.j, settings.pen, settings.feed_rate)
           
     elif (instruction.g == 28): # zero return.
         return [(0,0,0)]
@@ -188,14 +188,14 @@ def execute(instruction, position, settings):
         return [position,position,position,position,position]    
 
     elif (instruction.g == 4): # dwell.
-        points = []
-        for i in range(instruction.p * 10):
+        waitpoints = []
+        for o in range(instruction.p * 10):
             points.append(position)
-        return points
+        return waitpoints
     # Change settings.
     if (instruction.g == 90 or instruction.g == 91):
         # G90 = absolute positioning, G91 is relative positioning.
-        pos_share = instruction.g % 90
+        settings.absolute = instruction.g % 90
     
     return []
         
@@ -305,9 +305,6 @@ def arcr(pos, direction, r, pen, feed, x_rel=0, y_rel=0):
     if (r < 0):
         # Choose long arc
         r = abs(r)
-    else:
-        # Choose short arc
-        r = r
     
     if (x_rel == 0 and y_rel == 0):
         angle = 2 * m.pi
