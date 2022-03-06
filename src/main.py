@@ -24,6 +24,46 @@ import kinematics
 import gcode
 from math import pi
 
+def initialize_encoders():
+    """!
+    Initalizes the encoders to their respective positons
+    """
+    '''print("ENC1: ", share_enc1.get())
+    print("ENC2: ", share_enc2.get())
+    while share_enc1.get() < 0:
+        cotask.task_list.pri_sched ()
+        print("ENC1: ", share_enc1.get())
+        share_motor1.put(-20)
+        share_motor2.put(-20)
+        utime.sleep_ms(500)
+    while share_enc2.get() > 0:
+        cotask.task_list.pri_sched ()
+        print("ENC2: ", share_enc2.get())
+        share_motor1.put(20)
+        share_motor2.put(20)
+        utime.sleep_ms(500)
+    return True'''
+    switch1 = switchDriver.SwitchDriver(pyb.Pin.board.PC3)
+    enc1 = encoderDriver.EncoderDriver(pyb.Pin.board.PB6,pyb.Pin.board.PB7, 4)
+    switch2 = switchDriver.SwitchDriver(pyb.Pin.board.PC2)
+    enc2 = encoderDriver.EncoderDriver(pyb.Pin.board.PC6,pyb.Pin.board.PC7, 8)
+    moe1 = motorDriver.MotorDriver(pyb.Pin.board.PA10,
+        pyb.Pin.board.PB4, pyb.Pin.board.PB5, 3)
+    moe2 = motorDriver.MotorDriver(pyb.Pin.board.PC1,
+        pyb.Pin.board.PA0, pyb.Pin.board.A1, 5)
+    enc1.position = -8192
+    enc2.position = 8192
+    while switch1.getValue():
+        moe1.set_duty_cycle(-30)
+        moe2.set_duty_cycle(-30)
+        enc1.zero()
+    while switch2.getValue():
+        moe1.set_duty_cycle(30)
+        moe2.set_duty_cycle(30)
+        enc2.zero()
+    share_enc2.put(enc2.position)
+    share_enc1.put(enc1.position)
+
 def task0_master ():
     """!
     Takes and converts GCode and passes to to program for drawing device
@@ -37,6 +77,7 @@ def task0_master ():
              print(angles[0] * 180 / pi, angles[1] * 180 / pi)
              share_degree1.put(angles[0] * 180 / pi)
              share_degree2.put(angles[1] * 180 / pi)
+             share_servo.put(angles[2])
              yield(0)
 
 def task1_encoder1 ():
@@ -46,12 +87,14 @@ def task1_encoder1 ():
     """
     switch = switchDriver.SwitchDriver(pyb.Pin.board.PC3)
     enc = encoderDriver.EncoderDriver(pyb.Pin.board.PB6,pyb.Pin.board.PB7, 4)
+    enc.position = share_enc1.get()
     while True:
         if not switch.getValue():
-            print("PLEASE GOD NO 1")
+            print("OH THE HUMANITY!!!! 1")
+            enc.zero()
             share_motor1.put(0)
             share_enc1.put(0)
-            share_degree1.put(0)
+            share_degree1.put(30)
         else:
             enc.update()
         share_enc1.put(enc.read())
@@ -99,12 +142,14 @@ def task4_encoder2 ():
     """
     switch = switchDriver.SwitchDriver(pyb.Pin.board.PC2)
     enc = encoderDriver.EncoderDriver(pyb.Pin.board.PC6,pyb.Pin.board.PC7, 8)
+    enc.position = share_enc2.get()
     while True:
         if not switch.getValue():
-            print("PLEASE GOD NO 2")
+            print("PLEASE OH GOD NO 2")
+            enc.zero()
             share_motor2.put(0)
             share_enc2.put(0)
-            share_degree2.put(0)
+            share_degree2.put(30)
         else:
             enc.update()
         share_enc2.put(enc.read())
@@ -129,10 +174,12 @@ def task6_control2 ():
     analysis
     """
     #starts off at 5 degrees
+    servo = servoDriver.ServoDriver(pyb.Pin.board.PA0, 2)
     controller = controls.Controls(16092, 3000/8192, 0)
     while True:
         controller.set_setpoint(encoderDriver.degree_to_enc(share_degree2.get(), (7/2)))
         share_motor2.put(controller.controlLoop(share_enc2.get()))
+        servo.set_duty_cycle(share_servo.get())
         yield(0)
     
 
@@ -143,10 +190,9 @@ def task6_control2 ():
 
 if __name__ == "__main__":
     
-    '''queue_enc1Values = task_share.Queue ('f', 16, thread_protect = False, overwrite = False,
-                           name = "Enc Coordinates Queue 1")
-    queue_enc2Values = task_share.Queue ('f', 16, thread_protect = False, overwrite = False,
-                           name = "Enc Coordinates Queue 2")'''
+    share_servo = task_share.Share ('i', thread_protect = False, name = "Share Servo")
+
+    
     share_degree1 = task_share.Share ('f', thread_protect = False, name = "Share Degree 1")
     share_degree2 = task_share.Share ('f', thread_protect = False, name = "Share Degree 2")
     share_enc1 = task_share.Share ('f', thread_protect = False, name = "Share Encoder 1")
@@ -155,7 +201,13 @@ if __name__ == "__main__":
     share_motor1 = task_share.Share ('f', thread_protect = False, name = "Share Motor 1")
     share_motor2 = task_share.Share ('f', thread_protect = False, name = "Share Motor 2")
     
-
+    
+    
+    #
+    initialize_encoders()
+    #
+    
+    
     task0 = cotask.Task (task0_master, name = 'Master', priority = 4, 
                          period = 200, profile = True, trace = False)
     task1 = cotask.Task (task1_encoder1, name = 'Encoder1', priority = 2, 
@@ -171,15 +223,24 @@ if __name__ == "__main__":
     task6 = cotask.Task (task6_control2, name = 'Controller2', priority = 1, 
                          period = 5, profile = True, trace = False)
     
-    cotask.task_list.append (task0)
     cotask.task_list.append (task1)
     cotask.task_list.append (task2)
-    cotask.task_list.append (task3)
     cotask.task_list.append (task4)
     cotask.task_list.append (task5)
+
+    
+    '''initialized = False
+    share_enc1.put(-8192)
+    share_enc2.put(8192)
+    while not initialized:
+        cotask.task_list.pri_sched ()
+        initialized = initialize_encoders()
+        print("\n\n\n\nINITIALIZED\n\n\n")'''
+    
+    cotask.task_list.append (task0)
+    cotask.task_list.append (task3)
     cotask.task_list.append (task6)
 
-   
     gc.collect ()
 
     vcp = pyb.USB_VCP ()
