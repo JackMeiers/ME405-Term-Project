@@ -135,10 +135,10 @@ def execute(instruction, position, settings):
         pass
         
     elif (instruction.m == 3 or instruction.m == 4): # put pen down.
-        settings.pen = 1
+        settings.pen = 10
 
     elif (instruction.m == 5): # pull pen up.
-        settings.pen = 0
+        settings.pen = 1
 
     elif (instruction.m == 47): # repeat from first line.
         return [(0,0, settings.pen)]
