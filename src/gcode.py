@@ -263,7 +263,7 @@ def arc(pos, direction, i, j, pen, feed, x_rel=0, y_rel=0):
         theta = direction * d / radius
         x = radius * m.cos(theta + offset) + center_point[0]
         y = radius * m.sin(theta + offset) + center_point[1]
-        points.insert(-1, (x,y, pen))
+        points.insert(-1, (x, y, pen))
         d += step
           
     return points
@@ -338,6 +338,6 @@ if __name__ == "__main__":
     # debug code
     # points = linear((2,2), 1, 3, 60)
     # points = arcr((2,2),0, 1.4, 60, 2, 0)
-    points = get_instructions("../pentest.nc")
+    points = get_instructions("../balloon.nc")
     for i in points:
-        print("x: " + str(i[0]) + " y: " + str(i[1]) + " z: " + str(i[2]) + "\n")
+        print("(" + str(i[0]) + "," + str(i[1]) + ")\n")
