@@ -33,9 +33,11 @@ class g_code_instruction:
         self.m = 0
         
         line = line.upper() # Make string uppercase.
-        line = line.replace(';', ' ')
+        #line = line.replace(';', ' ')
         blocks = line.split(' ')
         for i in range(len(blocks)):
+            if blocks[i].startswith(';'):
+                break
             if blocks[i].startswith('N'): # Line number.
                 self.n = int(blocks[i].replace('N', ''))
                 continue
