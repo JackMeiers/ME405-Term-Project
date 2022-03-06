@@ -80,7 +80,7 @@ def task0_master ():
     """!
     Takes and converts GCode and passes to to program for drawing device
     """
-    points = gcode.get_instructions("pentest.nc")
+    points = gcode.get_instructions("balloon.nc")
     while True:
         for point in points:
              #print("X-Y: ",end="")
