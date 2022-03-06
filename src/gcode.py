@@ -340,6 +340,6 @@ if __name__ == "__main__":
     # debug code
     # points = linear((2,2), 1, 3, 60)
     # points = arcr((2,2),0, 1.4, 60, 2, 0)
-    points = get_instructions("../balloon.nc")
+    points = get_instructions("balloon.nc")
     for i in points:
         print("(" + str(i[0]) + "," + str(i[1]) + ")\n")

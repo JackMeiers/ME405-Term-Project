@@ -247,8 +247,8 @@ if __name__ == "__main__":
                          period = 6, profile = True, trace = False)
     task6 = cotask.Task (task6_control2, name = 'Controller2', priority = 1, 
                          period = 1, profile = True, trace = False)
-    task7 = cotask.Task (task7_servo, name = 'Servo', priority = 5, 
-                         period = 100, profile = True, trace = False)
+    #task7 = cotask.Task (task7_servo, name = 'Servo', priority = 5, 
+     #                    period = 100, profile = True, trace = False)
     
     cotask.task_list.append (task1)
     cotask.task_list.append (task2)
@@ -267,7 +267,7 @@ if __name__ == "__main__":
     cotask.task_list.append (task0)
     cotask.task_list.append (task3)
     cotask.task_list.append (task6)
-    cotask.task_list.append (task7)
+    #cotask.task_list.append (task7)
 
     gc.collect ()
 
