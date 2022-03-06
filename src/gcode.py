@@ -80,6 +80,7 @@ class g_code_settings:
         self.feed_rate = 60
         self.absolute = 0
         self.last_g = -1
+        self.pen = 0
 
 def get_instructions(filepath):
     '''! Opens a g code file and gets a list of all the instructions.
@@ -97,7 +98,7 @@ def get_instructions(filepath):
     
     positions = []
     settings = g_code_settings()
-    positions += zero()
+    positions += [(0,0,0)]
     for instr in instructions:
         test = execute(instr, positions[-1], settings)
         positions += test
@@ -123,79 +124,69 @@ def execute(instruction, position, settings):
     # M codes.
     if (instruction.m == 30): # signal program end w/ reset.
         # put settings back to default and zero.
-        return zero()
-        #reset()
-        # exit.
-        #shutdown()
+        return [(0,0,0)]
 
     elif (instruction.m == 2): # program end.
-        shutdown()
+        #
+        pass
 
     elif (instruction.m == 0): # pause execution.
-        pause()
+        #
+        pass
         
     elif (instruction.m == 3 or instruction.m == 4): # put pen down.
-        pen()
+        settings.pen = 1
 
     elif (instruction.m == 5): # pull pen up.
-        pen(False)
+        settings.pen = 0
 
     elif (instruction.m == 47): # repeat from first line.
-        # put settings to default and zero.
-        reset()
-        # reload instructions and restart.
-        restart()
+        return [(0,0, settings.pen)]
     
     if (instruction.isRepeat()): # repeat last instruction w/ new x,y,i,j
         if (last_g==-1):
             print("Error: bad g code formatting")
         instruction.g = last_g
         
-    if (instruction.g == 0): # full speed translation.
+    if (instruction.g == 0 or instruction.g == 1): # full speed translation.
         # Convert from relative to absolute if necessary.
-        last_g = 0
-        #if (pos_task == 0):
-            # abs_point = abs_to_rel(position, instruction.x, instruction.y)
-            #instruction.x = abs_point[0]
-            #instruction.y = abs_point[1]
-        
-        return linear(position, instruction.x, instruction.y)
-    elif (instruction.g == 1): # linear translation.
-        # Convert from relative to absolute if necessary.
-        last_g = 1
+        settings.last_g = instruction.g
         if (settings.absolute == 0):
             abs_point = abs_to_rel(position, instruction.x, instruction.y)
             instruction.x = abs_point[0]
             instruction.y = abs_point[1]
         
-        return linear(position, instruction.x, instruction.y, settings.feed_rate)
+        if (instruction.g == 1):
+            return linear(position, instruction.x, instruction.y, settings.pen, settings.feed_rate)
+        return linear(position, instruction.x, instruction.y, settings.pen)
 
     elif (instruction.g == 2 or instruction.g == 3): # cw or ccw arc.
         settings.last_g == instruction.g
         direction = instruction.g % 2
         # Convert from relative to absolute if necessary.
-        #if (pos_task == 0):
-        #    abs_point = abs_to_rel(position, instruction.x, instruction.y)
-        #    instruction.x = abs_point[0]
-        #    instruction.y = abs_point[1]
+        if (settings.absolute == 0):
+            abs_point = abs_to_rel(position, instruction.x, instruction.y)
+            instruction.x = abs_point[0]
+            instruction.y = abs_point[1]
         
         if (instruction.r!=0):
-            return arcr(position, direction, instruction.r, settings.feed_rate, instruction.x, instruction.y)
-        else:
-            return arc(position, direction, instruction.i, instruction.j, settings.feed_rate, instruction.x, instruction.y)
+            return arcr(position, direction, instruction.r, settings.pen, settings.feed_rate, instruction.x, instruction.y)
+
+        return arc(position, direction, instruction.i, instruction.j, settings.pen, settings.feed_rate, instruction.x, instruction.y)
 
     elif (instruction.g == 12 or instruction.g == 13): # cw or ccw circle.
-        last_g = instruction.g
+        settings.last_g = instruction.g
         direction = instruction.g % 12
         if (instruction.r!=0):
             return arcr(position, direction, instruction.r, settings.feed_rate)
-        else:
-            return arc(position, direction, instruction.i, instruction.j, settings.feed_rate)
+        
+        return arc(position, direction, instruction.i, instruction.j, settings.feed_rate)
           
     elif (instruction.g == 28): # zero return.
-        return zero()
-    #else if (instruction.g == 9): # exact stop.
-    
+        return [(0,0,0)]
+    elif (instruction.g == 9): # exact stop.
+        return [position,position,position,position,position]    
+
     elif (instruction.g == 4): # dwell.
         points = []
         for i in range(instruction.p * 10):
@@ -206,9 +197,6 @@ def execute(instruction, position, settings):
         # G90 = absolute positioning, G91 is relative positioning.
         pos_share = instruction.g % 90
     
-    #if (unit_share is not None and (instruction.g == 20 or instruction.g == 21)):
-    #    # G20 = inches, G21 = cm
-    #    unit_share.put(instruction.g % 20)
     return []
         
 
@@ -218,9 +206,9 @@ def distance(start, end):
 
     return m.sqrt(pow(delta_x,2) + pow(delta_y,2))
 
-def linear(pos, x_rel, y_rel, feed=-1):
+def linear(pos, x_rel, y_rel, pen, feed=-1):
     start_point = pos
-    end_point = (pos[0] + x_rel, pos[1] + y_rel)
+    end_point = (pos[0] + x_rel, pos[1] + y_rel, pen)
     points = [end_point]
     
     distance1 = distance(start_point, end_point)
@@ -234,16 +222,16 @@ def linear(pos, x_rel, y_rel, feed=-1):
     
     d = step
     while d < distance1:
-        new_point = (start_point[0] + u[0] * d, start_point[1] + u[1] * d)
+        new_point = (start_point[0] + u[0] * d, start_point[1] + u[1] * d, pen)
         points.insert(-1,new_point)
 
         d += step
     
     return points
 
-def arc(pos, direction, i, j, feed, x_rel=0, y_rel=0):
+def arc(pos, direction, i, j, pen, feed, x_rel=0, y_rel=0):
     start_point = pos
-    end_point = (pos[0] + x_rel, pos[1] + y_rel)
+    end_point = (pos[0] + x_rel, pos[1] + y_rel, pen)
     center_point = (pos[0] + i,pos[1] + j)
     if (direction == 0): # map directions
         direction = -1
@@ -275,7 +263,7 @@ def arc(pos, direction, i, j, feed, x_rel=0, y_rel=0):
         theta = direction * d / radius
         x = radius * m.cos(theta + offset) + center_point[0]
         y = radius * m.sin(theta + offset) + center_point[1]
-        points.insert(-1, (x,y))
+        points.insert(-1, (x,y, pen))
         d += step
           
     return points
@@ -285,19 +273,19 @@ def find_j(r,x,y):
     if (r < 0):
         scale = -1
     r = abs(r)
-    root = 4 * pow(r,2) * pow(x,4) + 4 * pow(r,2) * pow(x,2) * pow(y,2) - pow(x,6) - 2 * pow(x,4) * pow(y,2) - pow(x,2) * pow(y,4)
-    num = scale * m.sqrt(root) + pow(x,2) * y + pow(y,3)
-    denom = 2 * (pow(x,2) + pow(y,2))
+    root = 4 * r**2 * x**4 + 4 * r**2 * x**2 * y**2 - x**6 - 2 * x**4 * y**2 - x**2 * y**4
+    num = scale * m.sqrt(root) + x**2 * y + y**3
+    denom = 2 * (x**2 + y**2)
     
     return num/denom
 
 def find_i(r,j):
-    return m.sqrt(pow(r,2) - pow(j,2))
+    return m.sqrt(r**2 - j**2)
 
     
-def arcr(pos, direction, r, feed, x_rel=0, y_rel=0):
+def arcr(pos, direction, r, pen, feed, x_rel=0, y_rel=0):
     start_point = pos
-    end_point = (pos[0] + x_rel, pos[1] + y_rel)
+    end_point = (pos[0] + x_rel, pos[1] + y_rel, pen)
     if (direction == 0): # map directions
         direction = -1
         
@@ -335,32 +323,10 @@ def arcr(pos, direction, r, feed, x_rel=0, y_rel=0):
         theta = direction * d / r
         x = r * m.cos(theta + offset) + center_point[0]
         y = r * m.sin(theta + offset) + center_point[1]
-        points.insert(-1, (x,y))
+        points.insert(-1, (x,y, pen))
         d += step
           
     return points
-        
-
-def pen(down=True):
-    # drop pen
-    return
-
-def pause():
-    return
-
-def reset(position):
-    return zero(position)
-    
-def zero():
-    return [(0,0)]
-    
-def shutdown():
-    pen(False)
-    zero()
-    return
-    
-def restart():
-    return
     
 def abs_to_rel(current_pos, x, y):
     return (x - current_pos[0], y - current_pos[1])
@@ -375,6 +341,6 @@ if __name__ == "__main__":
     # debug code
     # points = linear((2,2), 1, 3, 60)
     # points = arcr((2,2),0, 1.4, 60, 2, 0)
-    points = get_instructions("../balloon.nc")
+    points = get_instructions("../pentest.nc")
     for i in points:
-        print("x: " + str(i[0]) + " y: " + str(i[1]) + "\n")
+        print("x: " + str(i[0]) + " y: " + str(i[1]) + " z: " + str(i[2]) + "\n")
