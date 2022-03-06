@@ -80,7 +80,7 @@ class g_code_settings:
         self.feed_rate = 60
         self.absolute = 0
         self.last_g = -1
-        self.pen = 0
+        self.pen = 1
 
 def get_instructions(filepath):
     '''! Opens a g code file and gets a list of all the instructions.
@@ -135,7 +135,7 @@ def execute(instruction, position, settings):
         pass
         
     elif (instruction.m == 3 or instruction.m == 4): # put pen down.
-        settings.pen = 10
+        settings.pen = 5
 
     elif (instruction.m == 5): # pull pen up.
         settings.pen = 1
@@ -332,7 +332,7 @@ def rel_to_abs(current_pos, x, y):
     return (current_pos[0] + x, current_pos[1] + y)
 
 def apply_offset(point):
-    return (point[0] + 0.625, point[1] + 8)
+    return (point[0] + 0.625, point[1] + 10)
 
 if __name__ == "__main__":
     # debug code

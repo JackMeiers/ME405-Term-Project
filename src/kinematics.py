@@ -26,7 +26,7 @@ def convertToEncoderAngles(x, y):
         y = 0.00001
     D = 1.25
     L2 = 10
-    L1 = 9.8 
+    L1 = 10.2
     edge_c = sqrt(x**2+y**2)
     #print("c: ", edge_c)
     edge_e = sqrt((D-x)**2 + y**2)
@@ -62,7 +62,7 @@ def arccos(radians):
         return acos(radians)
     
 if __name__ == "__main__":
-            radians = convertToEncoderAngles(3 + .625, 3 + 8)
+            radians = convertToEncoderAngles(3 + .625, 3 + 3)
             print(radians[0] * 180 / pi, radians[1] * 180 / pi)
     
     
