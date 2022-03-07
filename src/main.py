@@ -53,18 +53,22 @@ def initialize_encoders():
         pyb.Pin.board.PA0, pyb.Pin.board.A1, 5)
     while switch1.getValue():
         moe1.set_duty_cycle(60)
-        moe2.set_duty_cycle(60)
-        enc2.zero()
+        moe2.set_duty_cycle(40)
+        enc1.update()
+        enc2.update()
+    enc1.zero()
     print("SWITCH 2 DONE!")
     while switch2.getValue():
-        moe1.set_duty_cycle(-60)
+        moe1.set_duty_cycle(-40)
         moe2.set_duty_cycle(-60)
-        enc1.zero()
+        enc1.update()
+        enc2.update()
+    enc2.zero()
     print("SWITCH 1 DONE!")
     i = 0
-    while i < 2000:
-        moe1.set_duty_cycle(60)
-        moe2.set_duty_cycle(60)
+    while i < 1000:
+        moe1.set_duty_cycle(40)
+        moe2.set_duty_cycle(40)
         i = i + 1
         enc1.update()
         enc2.update()
@@ -229,7 +233,7 @@ if __name__ == "__main__":
     
     
     #
-    #initialize_encoders()
+    initialize_encoders()
     #
     
     #for approx hourglass y offset = + 15 feed 5000, master period 25 enc period 10, motor 6, control 1
