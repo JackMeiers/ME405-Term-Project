@@ -82,7 +82,7 @@ class g_code_settings:
         self.feed_rate = 60
         self.absolute = 0
         self.last_g = -1
-        self.pen = 1
+        self.pen = 5
 
 def get_instructions(filepath):
     '''! Opens a g code file and gets a list of all the instructions.
@@ -137,10 +137,10 @@ def execute(instruction, position, settings):
         pass
         
     elif (instruction.m == 3 or instruction.m == 4): # put pen down.
-        settings.pen = 5
+        settings.pen = 1
 
     elif (instruction.m == 5): # pull pen up.
-        settings.pen = 1
+        settings.pen = 5
 
     elif (instruction.m == 47): # repeat from first line.
         return [(0,0, settings.pen)]

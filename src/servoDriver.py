@@ -23,7 +23,7 @@ class ServoDriver:
         self.pinIN1 = pyb.Pin (in1pin, pyb.Pin.OUT_PP)
         #must declare pyb.Pin.board.en_pin in main
         self.tim = pyb.Timer (timer, freq=50)
-        self.ch1 = self.tim.channel (2, pyb.Timer.PWM, pin=self.pinIN1)
+        self.ch1 = self.tim.channel (timer, pyb.Timer.PWM, pin=self.pinIN1)
         
     def set_duty_cycle(self, level):
         '''!

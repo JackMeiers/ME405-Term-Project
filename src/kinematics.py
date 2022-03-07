@@ -57,7 +57,6 @@ def convertToEncoderAngles(x, y):
     J = pi - (C-beta)
     x = x - L3 * cos(J - (pi - pangle))
     y = y - L3 * sin(J - (pi - pangle))
-    print(x,y)
     ## recalc with new x y positions
     edge_c = sqrt(x**2+y**2)
     #print("c: ", edge_c)

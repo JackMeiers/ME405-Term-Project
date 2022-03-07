@@ -43,6 +43,8 @@ def initialize_encoders():
         share_motor2.put(20)
         utime.sleep_ms(500)
     return True'''
+    servo = servoDriver.ServoDriver(pyb.Pin.board.PA8, 1)
+    servo.set_duty_cycle(5)
     switch1 = switchDriver.SwitchDriver(pyb.Pin.board.PC2)
     enc1 = encoderDriver.EncoderDriver(pyb.Pin.board.PB6,pyb.Pin.board.PB7, 4)
     switch2 = switchDriver.SwitchDriver(pyb.Pin.board.PC3)
@@ -84,17 +86,21 @@ def task0_master ():
     """!
     Takes and converts GCode and passes to to program for drawing device
     """
-    points = gcode.get_instructions("balloon.nc")
+    i = 0
+    points = gcode.get_instructions("sample3.nc")
     while True:
         for point in points:
              #print("X-Y: ",end="")
-             #print(gcode.apply_offset(point)[0],gcode.apply_offset(point)[1])
+             #print(gcode.apply_(point)[0],gcode.apply_offset(point)[1])
              angles = kinematics.convertToEncoderAngles(gcode.apply_offset(point)[0],gcode.apply_offset(point)[1])
              #print(angles[0] * 180 / pi, angles[1] * 180 / pi)
              share_degree1.put(angles[0] * 180 / pi)
              share_degree2.put(angles[1] * 180 / pi)
              share_servo.put(point[2])
              yield(0)
+        for i in range(0,50,1):
+            share_servo.put(5)
+            yield(0)
 
 def task1_encoder1 ():
     """!
@@ -206,7 +212,7 @@ def task7_servo ():
     analysis
     """
     #starts off at 5 degrees
-    servo = servoDriver.ServoDriver(pyb.Pin.board.PA1, 2)
+    servo = servoDriver.ServoDriver(pyb.Pin.board.PA8, 1)
     while True:
         servo.set_duty_cycle(share_servo.get())
         yield(0)
@@ -251,8 +257,8 @@ if __name__ == "__main__":
                          period = 6, profile = True, trace = False)
     task6 = cotask.Task (task6_control2, name = 'Controller2', priority = 1, 
                          period = 1, profile = True, trace = False)
-    #task7 = cotask.Task (task7_servo, name = 'Servo', priority = 5, 
-     #                    period = 100, profile = True, trace = False)
+    task7 = cotask.Task (task7_servo, name = 'Servo', priority = 5, 
+                         period = 20, profile = True, trace = False)
     
     cotask.task_list.append (task1)
     cotask.task_list.append (task2)
@@ -271,7 +277,7 @@ if __name__ == "__main__":
     cotask.task_list.append (task0)
     cotask.task_list.append (task3)
     cotask.task_list.append (task6)
-    #cotask.task_list.append (task7)
+    cotask.task_list.append (task7)
 
     gc.collect ()
 
