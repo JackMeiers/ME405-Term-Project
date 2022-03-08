@@ -78,7 +78,7 @@ def initialize_encoders():
     moe2.set_duty_cycle(0)
     share_enc2.put(enc2.position)
     share_enc1.put(enc1.position)
-    utime.sleep(5)
+    utime.sleep(1)
     
 
 
@@ -142,7 +142,7 @@ def task3_control1 ():
     analysis
     """
     #starts off at 5 degrees
-    controller = controls.Controls(-16092, 5000/8192, 0)
+    controller = controls.Controls(-16092, 4300/8192, 0)
     while True:
         controller.set_setpoint(-encoderDriver.degree_to_enc(share_degree1.get(), (7 / 2)))
         share_motor1.put(controller.controlLoop(share_enc1.get()))
@@ -198,7 +198,7 @@ def task6_control2 ():
     analysis
     """
     #starts off at 5 degrees
-    controller = controls.Controls(16092, 5000/8192, 0)
+    controller = controls.Controls(16092, 4300/8192, 0)
     while True:
         controller.set_setpoint(encoderDriver.degree_to_enc(share_degree2.get(), (7/2)))
         share_motor2.put(controller.controlLoop(share_enc2.get()))
@@ -244,7 +244,7 @@ if __name__ == "__main__":
     
     #for approx hourglass y offset = + 15 feed 5000, master period 25 enc period 10, motor 6, control 1
     task0 = cotask.Task (task0_master, name = 'Master', priority = 4, 
-                         period = 45, profile = True, trace = False)
+                         period = 25, profile = True, trace = False)
     task1 = cotask.Task (task1_encoder1, name = 'Encoder1', priority = 2, 
                          period = 10, profile = True, trace = False)
     task2 = cotask.Task (task2_motor1, name = 'Motor1', priority = 1, 
