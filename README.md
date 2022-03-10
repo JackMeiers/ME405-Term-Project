@@ -28,3 +28,10 @@ so we will use either the bench power supply or a 12V battery to provide power t
 ![Diagram go here](./diagram.png)
 We based our design off of this previously done project, source is below:
 https://portfolium.com/entry/pen-gripping-dual-scara-arm-plotter
+
+### Video Links 
+1 - https://youtu.be/_5m5r6dnIIY 
+2 - https://youtu.be/3c9mipRUHZs 
+3 - https://youtu.be/eMAQph7v7VM 
+
+
