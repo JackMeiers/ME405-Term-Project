@@ -87,7 +87,7 @@ def task0_master ():
     Takes and converts GCode and passes to to program for drawing device
     """
     i = 0
-    points = gcode.get_instructions("sample3.nc")
+    points = gcode.get_instructions("balloon.nc")
     while True:
         for point in points:
              #print("X-Y: ",end="")
@@ -142,10 +142,17 @@ def task3_control1 ():
     analysis
     """
     #starts off at 5 degrees
-    controller = controls.Controls(-16092, 4300/8192, 0)
+    moe1 = motorDriver.MotorDriver(pyb.Pin.board.PA10,
+        pyb.Pin.board.PB4, pyb.Pin.board.PB5, 3)
+    moe2 = motorDriver.MotorDriver(pyb.Pin.board.PC1,
+        pyb.Pin.board.PA0, pyb.Pin.board.A1, 5)
+    controller1 = controls.Controls(-16092, 3000/8192, 0)
+    controller2 = controls.Controls(16092, 3000/8192, 0)
     while True:
-        controller.set_setpoint(-encoderDriver.degree_to_enc(share_degree1.get(), (7 / 2)))
-        share_motor1.put(controller.controlLoop(share_enc1.get()))
+        controller1.set_setpoint(-encoderDriver.degree_to_enc(share_degree1.get(), (7 / 2)))
+        controller2.set_setpoint(encoderDriver.degree_to_enc(share_degree2.get(), (7/2)))
+        moe2.set_duty_cycle(controller2.controlLoop(share_enc2.get()))
+        moe1.set_duty_cycle(controller1.controlLoop(share_enc1.get()))
         yield(0)
 
 '''def task4_limitSwitch ():
@@ -198,7 +205,7 @@ def task6_control2 ():
     analysis
     """
     #starts off at 5 degrees
-    controller = controls.Controls(16092, 4300/8192, 0)
+    controller = controls.Controls(16092, 5000/8192, 0)
     while True:
         controller.set_setpoint(encoderDriver.degree_to_enc(share_degree2.get(), (7/2)))
         share_motor2.put(controller.controlLoop(share_enc2.get()))
@@ -244,13 +251,13 @@ if __name__ == "__main__":
     
     #for approx hourglass y offset = + 15 feed 5000, master period 25 enc period 10, motor 6, control 1
     task0 = cotask.Task (task0_master, name = 'Master', priority = 4, 
-                         period = 25, profile = True, trace = False)
+                         period = 120, profile = True, trace = False)
     task1 = cotask.Task (task1_encoder1, name = 'Encoder1', priority = 2, 
-                         period = 10, profile = True, trace = False)
+                         period = 5, profile = True, trace = False)
     task2 = cotask.Task (task2_motor1, name = 'Motor1', priority = 1, 
-                         period = 6, profile = True, trace = False)
+                         period = 3, profile = True, trace = False)
     task3 = cotask.Task (task3_control1, name = 'Controller1', priority = 1, 
-                         period = 1, profile = True, trace = False)
+                         period = 0.1, profile = True, trace = False)
     task4 = cotask.Task (task4_encoder2, name = 'Encoder2', priority = 2, 
                          period = 10, profile = True, trace = False)
     task5 = cotask.Task (task5_motor2, name = 'Motor2', priority = 1, 
@@ -263,7 +270,7 @@ if __name__ == "__main__":
     cotask.task_list.append (task1)
     cotask.task_list.append (task2)
     cotask.task_list.append (task4)
-    cotask.task_list.append (task5)
+    #cotask.task_list.append (task5)
 
     
     '''initialized = False
@@ -276,7 +283,7 @@ if __name__ == "__main__":
     
     cotask.task_list.append (task0)
     cotask.task_list.append (task3)
-    cotask.task_list.append (task6)
+    #cotask.task_list.append (task6)
     cotask.task_list.append (task7)
 
     gc.collect ()

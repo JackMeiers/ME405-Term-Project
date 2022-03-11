@@ -334,7 +334,7 @@ def rel_to_abs(current_pos, x, y):
     return (current_pos[0] + x, current_pos[1] + y)
 
 def apply_offset(point):
-    return (point[0] + 0.625, point[1] + 15)
+    return (point[0] - 2, point[1] + 15)
 
 if __name__ == "__main__":
     # debug code

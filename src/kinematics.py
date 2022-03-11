@@ -41,10 +41,10 @@ def convertToEncoderAngles(x, y):
     #print("e: ",edge_e)
     delta = atan(y/x)
     #print("Delta :", delta)
-    epsilon = acos((edge_e**2 - L2**2 + L1**2)/(2*L1*edge_e))  #used wrong edge here!, changed it already
+    epsilon = arccos((edge_e**2 - L2**2 + L1**2)/(2*L1*edge_e))  #used wrong edge here!, changed it already
     #print("Epsilon :", epsilon)
     # r
-    phi = acos((edge_c**2 - L2**2 + L1**2)/(2*L1*edge_c))
+    phi = arccos((edge_c**2 - L2**2 + L1**2)/(2*L1*edge_c))
     #print("Phi :", phi)
     psi = atan(y/(D - x))
     #print("Psi :", psi)
@@ -53,7 +53,7 @@ def convertToEncoderAngles(x, y):
     #print("ALPHA,BETA: ", end='')
     #kinprint(alpha,beta)
     ## Now calculate for pen offset
-    C = acos((L2**2 + L1**2 - edge_e**2)/(2*L1*L2))
+    C = arccos((L2**2 + L1**2 - edge_e**2)/(2*L1*L2))
     J = pi - (C-beta)
     x = x - L3 * cos(J - (pi - pangle))
     y = y - L3 * sin(J - (pi - pangle))
@@ -64,10 +64,10 @@ def convertToEncoderAngles(x, y):
     #print("e: ",edge_e)
     delta = atan(y/x)
     #print("Delta :", delta)
-    epsilon = acos((edge_e**2 - L2**2 + L1**2)/(2*L1*edge_e))  #used wrong edge here!, changed it already
+    epsilon = arccos((edge_e**2 - L2**2 + L1**2)/(2*L1*edge_e))  #used wrong edge here!, changed it already
     #print("Epsilon :", epsilon)
     # r
-    phi = acos((edge_c**2 - L2**2 + L1**2)/(2*L1*edge_c))
+    phi = arccos((edge_c**2 - L2**2 + L1**2)/(2*L1*edge_c))
     #print("Phi :", phi)
     psi = atan(y/(D - x))
     #print("Psi :", psi)
