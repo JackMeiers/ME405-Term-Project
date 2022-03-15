@@ -1,9 +1,6 @@
 '''!
 @file main.py
-    This file contains a modified version of JR Ridgely's
-    basic_task.py (https://github.com/spluttflob/ME405-Support)
-    that creates tasks for running two seperate motors step responses at
-    the same time
+    This 
 @author Lucas Sandsor
 @author Jack Barone
 @author Jack Meyers
@@ -26,23 +23,11 @@ from math import pi
 
 def initialize_encoders():
     """!
-    Initalizes the encoders to their respective positons
+    @brief Initalizes the encoders to their respective positons by first
+    having the motors go all the way to the right and hitting the right
+    limit switch, going all the way to the left and hitting the left limit
+    switch, and then goes towards the center and waits for 1 second
     """
-    '''print("ENC1: ", share_enc1.get())
-    print("ENC2: ", share_enc2.get())
-    while share_enc1.get() < 0:
-        cotask.task_list.pri_sched ()
-        print("ENC1: ", share_enc1.get())
-        share_motor1.put(-20)
-        share_motor2.put(-20)
-        utime.sleep_ms(500)
-    while share_enc2.get() > 0:
-        cotask.task_list.pri_sched ()
-        print("ENC2: ", share_enc2.get())
-        share_motor1.put(20)
-        share_motor2.put(20)
-        utime.sleep_ms(500)
-    return True'''
     servo = servoDriver.ServoDriver(pyb.Pin.board.PA8, 1)
     servo.set_duty_cycle(5)
     switch1 = switchDriver.SwitchDriver(pyb.Pin.board.PC2)
@@ -54,6 +39,7 @@ def initialize_encoders():
     moe2 = motorDriver.MotorDriver(pyb.Pin.board.PC1,
         pyb.Pin.board.PA0, pyb.Pin.board.A1, 5)
     while switch1.getValue():
+        #offset duty cycles reduced singularity issues
         moe1.set_duty_cycle(60)
         moe2.set_duty_cycle(40)
         enc1.update()
@@ -61,6 +47,7 @@ def initialize_encoders():
     enc1.zero()
     print("SWITCH 2 DONE!")
     while switch2.getValue():
+        #offset duty cycles reduced singularity issues
         moe1.set_duty_cycle(-40)
         moe2.set_duty_cycle(-60)
         enc1.update()
@@ -69,6 +56,7 @@ def initialize_encoders():
     print("SWITCH 1 DONE!")
     i = 0
     while i < 1000:
+        #has it only for a few cycles so that it isn't hitting limit switch
         moe1.set_duty_cycle(40)
         moe2.set_duty_cycle(40)
         i = i + 1
@@ -106,6 +94,9 @@ def task1_encoder1 ():
     """!
     This task creates a driver for one of the encoders being used.
     It puts the curent value of the encoder into a share to be used by other tasks
+    There is a limit switch, and when pressed, it shows a unique message to the screen,
+    zeros the encoder, stops the motor, puts zero into both encoder shares for this
+    limit switch
     """
     switch = switchDriver.SwitchDriver(pyb.Pin.board.PC2)
     enc = encoderDriver.EncoderDriver(pyb.Pin.board.PB6,pyb.Pin.board.PB7, 4)
@@ -124,10 +115,7 @@ def task1_encoder1 ():
         yield (0)
         
 def task2_motor1 ():
-    """!
-    This task creates a driver for one of the motors being used.
-    It puts the current duty cycle of the motor into a share to be used by other tasks
-    """
+    #phased out of final code
     moe = motorDriver.MotorDriver(pyb.Pin.board.PA10,
         pyb.Pin.board.PB4, pyb.Pin.board.PB5, 3)
     while True:
@@ -136,10 +124,8 @@ def task2_motor1 ():
         
 def task3_control1 ():
     """!
-    This task creates a controller for using the shared encoder
-    value and uses it to adjust the speed of a motor to get to a desired position
-    given by the user. It also stores the time and ticks of an encoder for outside
-    analysis
+    This task creates a controller
+    This encoder is 
     """
     #starts off at 5 degrees
     moe1 = motorDriver.MotorDriver(pyb.Pin.board.PA10,
@@ -169,6 +155,9 @@ def task4_encoder2 ():
     """!
     This task creates a driver for one of the encoders being used.
     It puts the curent value of the encoder into a share to be used by other tasks
+    There is a limit switch, and when pressed, it shows a unique message to the screen,
+    zeros the encoder, stops the motor, puts zero into both encoder shares for this
+    limit switch
     """
     switch = switchDriver.SwitchDriver(pyb.Pin.board.PC3)
     enc = encoderDriver.EncoderDriver(pyb.Pin.board.PC6,pyb.Pin.board.PC7, 8)
@@ -187,10 +176,7 @@ def task4_encoder2 ():
         yield (0)
         
 def task5_motor2 ():
-    """!
-    This task creates a driver for one of the motors being used.
-    It puts the current duty cycle of the motor into a share to be used by other tasks
-    """
+    #Phased out of final code
     moe = motorDriver.MotorDriver(pyb.Pin.board.PC1,
         pyb.Pin.board.PA0, pyb.Pin.board.A1, 5)
     while True:
@@ -198,13 +184,7 @@ def task5_motor2 ():
         yield(0)
         
 def task6_control2 ():
-    """!
-    This task creates a controller for using the shared encoder
-    value and uses it to adjust the speed of a motor to get to a desired position
-    given by the user. It also stores the time and ticks of an encoder for outside
-    analysis
-    """
-    #starts off at 5 degrees
+    #phased out of final code
     controller = controls.Controls(16092, 5000/8192, 0)
     while True:
         controller.set_setpoint(encoderDriver.degree_to_enc(share_degree2.get(), (7/2)))
@@ -213,10 +193,8 @@ def task6_control2 ():
         
 def task7_servo ():
     """!
-    This task creates a controller for using the shared encoder
-    value and uses it to adjust the speed of a motor to get to a desired position
-    given by the user. It also stores the time and ticks of an encoder for outside
-    analysis
+    This task takes the value from the Servo share which is
+    manipulated by the main GCode parser. 
     """
     #starts off at 5 degrees
     servo = servoDriver.ServoDriver(pyb.Pin.board.PA8, 1)
@@ -225,31 +203,37 @@ def task7_servo ():
         yield(0)
     
 
-"""! This main code creates multiple shares for the two motor duty cycles and encoder ticks.
-     It then adds the tasks to cotask to be ran. The tasks run until somebody presses ENTER, at
-     which time the scheduler stops and printouts show diagnostic information about the
+"""! This main code first creates the shares that will be used to draw the picture
+    and interpret the GCode,
      tasks and shares"""
 
 if __name__ == "__main__":
     
+    #Servo share is used for the servo PWM which is a percent
+    #A PWM of 5 results in 45 degrees on the motor and PWM 1 is 0 degrees on motor
     share_servo = task_share.Share ('i', thread_protect = False, name = "Share Servo")
 
-    
+    #This is the shares that correlate the angle and encoder ticks
+    #could be removed but added for troubleshooting and the readibility was too nice to remove
     share_degree1 = task_share.Share ('f', thread_protect = False, name = "Share Degree 1")
     share_degree2 = task_share.Share ('f', thread_protect = False, name = "Share Degree 2")
+    
+    #Shares for the encoder ticks that is used to communicate between encoder and controller
     share_enc1 = task_share.Share ('f', thread_protect = False, name = "Share Encoder 1")
     share_enc2 = task_share.Share ('f', thread_protect = False, name = "Share Encoder 2")
 
+    #
     share_motor1 = task_share.Share ('f', thread_protect = False, name = "Share Motor 1")
     share_motor2 = task_share.Share ('f', thread_protect = False, name = "Share Motor 2")
     
     
     
-    #
+    #This task initlizes the encoders before cotask starts to run
     initialize_encoders()
-    #
     
     #for approx hourglass y offset = + 15 feed 5000, master period 25 enc period 10, motor 6, control 1
+    #different drawings worker better with different refresh rates
+    #task 2, 5, and 6 were merged into task 4 as it had better performance for non circle drawings
     task0 = cotask.Task (task0_master, name = 'Master', priority = 4, 
                          period = 120, profile = True, trace = False)
     task1 = cotask.Task (task1_encoder1, name = 'Encoder1', priority = 2, 
@@ -268,12 +252,14 @@ if __name__ == "__main__":
                          period = 20, profile = True, trace = False)
     
     cotask.task_list.append (task1)
-    cotask.task_list.append (task2)
+    #cotask.task_list.append (task2)
     cotask.task_list.append (task4)
     #cotask.task_list.append (task5)
 
     
-    '''initialized = False
+    '''
+    #Original phased out initialization sequence
+    initialized = False
     share_enc1.put(-8192)
     share_enc2.put(8192)
     while not initialized:
@@ -286,8 +272,10 @@ if __name__ == "__main__":
     #cotask.task_list.append (task6)
     cotask.task_list.append (task7)
 
+    #Active garbage collector for task share
     gc.collect ()
 
+    #if any key is pressed, the task ends and prints data from task list
     vcp = pyb.USB_VCP ()
     while not vcp.any ():
         cotask.task_list.pri_sched ()
