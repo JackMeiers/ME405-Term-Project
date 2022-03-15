@@ -78,6 +78,8 @@ class g_code_instruction:
 
 
 class g_code_settings:
+    '''! Holds settings between function runs.
+    '''
     def __init__(self):
         self.feed_rate = 60
         self.absolute = 0
@@ -110,14 +112,12 @@ def get_instructions(filepath):
     #    positions[i] = apply_offset(positions[i][0], positions[i][1])
     return positions
 
-'''!
+def execute(instruction, position, settings):
+    '''!
     @param instruction The instruction to be run.
     @param position The current position of the pen.
-    @param feed_task The share storing the current feed rate.
-    @param pos_task The share storing the coordinate system setting.
-    @param last_g The share with the g code of the last operation run.
-'''
-def execute(instruction, position, settings): 
+    @param settings g_code_settings object with this program's current settings.
+    '''
     # G codes.
     # Operations.
     if (instruction.f != 0):
@@ -127,15 +127,7 @@ def execute(instruction, position, settings):
     if (instruction.m == 30): # signal program end w/ reset.
         # put settings back to default and zero.
         return [(0,0,0)]
-
-    elif (instruction.m == 2): # program end.
-        #
-        pass
-
-    elif (instruction.m == 0): # pause execution.
-        #
-        pass
-        
+    
     elif (instruction.m == 3 or instruction.m == 4): # put pen down.
         settings.pen = 1
 
@@ -158,7 +150,7 @@ def execute(instruction, position, settings):
             instruction.x = abs_point[0]
             instruction.y = abs_point[1]
         
-        if (instruction.g == 1):
+        if (instruction.g == 1): # interpolated linear movement.
             return linear(position, instruction.x, instruction.y, settings.pen, settings.feed_rate)
         return linear(position, instruction.x, instruction.y, settings.pen)
 
@@ -203,12 +195,23 @@ def execute(instruction, position, settings):
         
 
 def distance(start, end):
+    '''! Calculates the distance between two points
+        @param start 2D or 3D point at the starting position.
+        @param end 2D or 3D point at the ending position.
+    '''
     delta_x = end[0] - start[0]
     delta_y = end[1] - start[1]
 
     return m.sqrt(pow(delta_x,2) + pow(delta_y,2))
 
 def linear(pos, x_rel, y_rel, pen, feed=-1):
+    '''! Generates the set of points for drawing a line.
+        @param pos The position of the pen at the beginning of the line.
+        @param x_rel The X coordinate of the line's end point.
+        @param y_rel The Y coordinate of the line'e end point.
+        @param pen The duty cycle of the pen servo for this operation.
+        @param feed The feed rate of the operation. If feed is -1, will perform a full-speed move
+    '''
     start_point = pos
     end_point = (pos[0] + x_rel, pos[1] + y_rel, pen)
     points = [end_point]
@@ -232,6 +235,16 @@ def linear(pos, x_rel, y_rel, pen, feed=-1):
     return points
 
 def arc(pos, direction, i, j, pen, feed, x_rel=0, y_rel=0):
+    '''! Generates and returns the set of points to draw an arc.
+        @param pos The starting position of the arc.
+        @param direction The direction of the arc, 0 for clockwise, 1 for counter-clockwise.
+        @param i The x position of the center of the arc.
+        @param j The y position of the center of the arc.
+        @param pen The state of the pen. 1 for pen down, 5 for pen up.
+        @param feed The feed rate of the operation. Given in inches per minute.
+        @param x_rel The x coordinate of the arc's end point.
+        @param y_rel The y coordinate of the arc's end point.
+    '''
     start_point = pos
     end_point = (pos[0] + x_rel, pos[1] + y_rel, pen)
     center_point = (pos[0] + i,pos[1] + j)
@@ -254,7 +267,10 @@ def arc(pos, direction, i, j, pen, feed, x_rel=0, y_rel=0):
     else:
         i_comp = i * (i - x_rel)
         j_comp = j * (j - y_rel)
-        angle = m.acos((i_comp + j_comp)/m.pow(radius,2))
+        val = (i_comp + j_comp)
+        if (val > 1):
+            val = val % 2 - 1
+        angle = m.acos(val/m.pow(radius,2))
         if (direction == 1):
             angle = 2 * m.pi - angle
     
@@ -271,6 +287,13 @@ def arc(pos, direction, i, j, pen, feed, x_rel=0, y_rel=0):
     return points
 
 def find_j(r,x,y):
+    '''! Calculates the y coordinate of the center of an arc based on the radius and end point.
+    @param r The radius in inches.
+    @param x The x coordinate of the end point.
+    @param y The y coordinate of the end point.
+    
+    @return 
+    '''
     scale = 1
     if (r < 0):
         scale = -1
@@ -282,10 +305,25 @@ def find_j(r,x,y):
     return num/denom
 
 def find_i(r,j):
+    '''! Calculates the x coordinate of the center of the arc, based on the radius and the center's y coordinate.
+        @param r The radius of the circle in inches.
+        @param j The y coordinate of the center point, calculated using find_j().
+        
+        @return
+    '''
     return m.sqrt(r**2 - j**2)
 
     
 def arcr(pos, direction, r, pen, feed, x_rel=0, y_rel=0):
+    '''! Generates and returns the set of points to draw an arc.
+        @param pos The starting position of the arc.
+        @param direction The direction of the arc, 0 for clockwise, 1 for counter-clockwise.
+        @param r The radius of the circle. A negative value will draw the short arc for the given value, while a positive value will draw the long arc.
+        @param pen The state of the pen. 1 for pen down, 5 for pen up.
+        @param feed The feed rate of the operation. Given in inches per minute.
+        @param x_rel The x coordinate of the arc's end point.
+        @param y_rel The y coordinate of the arc's end point.
+    '''
     start_point = pos
     end_point = (pos[0] + x_rel, pos[1] + y_rel, pen)
     if (direction == 0): # map directions
@@ -311,7 +349,12 @@ def arcr(pos, direction, r, pen, feed, x_rel=0, y_rel=0):
     if (x_rel == 0 and y_rel == 0):
         angle = 2 * m.pi
     else:
-        angle = m.acos((i * (i - x_rel)+ j * (j - y_rel))/m.pow(r,2))
+        #print(str(i) + " " + str(j))
+        val = (i * (i - x_rel)+ j * (j - y_rel))
+        #print(val)
+        if (val > 1):
+            val = (val % 2) - 1
+        angle = m.acos(val/m.pow(r,2))
         if (direction == 1):
             angle = 2 * m.pi - angle
     
@@ -328,18 +371,31 @@ def arcr(pos, direction, r, pen, feed, x_rel=0, y_rel=0):
     return points
     
 def abs_to_rel(current_pos, x, y):
+    '''! Converts a point in absolute space, to a point relative to the passed position.
+        @param current_pos The position that serves as the origin of the relative point.
+        @param x The absolute x value of the point to be converted.
+        @param y The absolute y value of the point to be converted.
+    '''
     return (x - current_pos[0], y - current_pos[1])
 
 def rel_to_abs(current_pos, x, y):
+    '''! Converts a point in relative space to absolute space.
+        @param current_pos Position that serves as the origin of the relative point.
+        @param x The relative x value of the point to be converted.
+        @param y The relative y value of the point to be converted.
+    '''
     return (current_pos[0] + x, current_pos[1] + y)
 
 def apply_offset(point):
+    '''! Applies an offset to convert from absolute space to the robot's drawing space.
+        @param point The point to apply the offset to.
+    '''
     return (point[0] - 2, point[1] + 15)
 
 if __name__ == "__main__":
     # debug code
     # points = linear((2,2), 1, 3, 60)
     # points = arcr((2,2),0, 1.4, 60, 2, 0)
-    points = get_instructions("balloon.nc")
+    points = get_instructions("../flower.nc")
     for i in points:
         print("(" + str(i[0]) + "," + str(i[1]) + ")\n")
