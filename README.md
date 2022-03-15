@@ -1,7 +1,7 @@
 # ME405 Term Project
 
 ### Introduction
-This goal of this project was to create a plotting robot capable of drawing images onto paper. The project allowed us to implement motion control, multitasking, and proper program orginization. The plotter must consist of 2.5 axis. The first two axis must 
+This goal of this project was to create a plotting robot capable of drawing images onto paper. The project allowed us to implement motion control, multitasking, and proper program orginization. The plotter must consist of 2.5 axis. The first two axis must cover at least a 4"x6" paper. The half axis acts as a boolean pen up or pen down. 
 
 ### Description
 Our design uses a dual-arm plotter design. 
@@ -24,7 +24,7 @@ so we will use either the bench power supply or a 12V battery to provide power t
 |  2   | 1/4" Steel Shaft      | McMaster-Carr         |    $16    |
 |  1   | H bridge Motor Driver | Personal              |     -     | 
 
-### Sketch
+### Initial Sketch
 ![Sketch go here](./sketch.PNG)
 
 ### Referenced Diagram
@@ -40,12 +40,20 @@ After iterating on the plotter design, we came up with a final design shown belo
 
 The majority of our components were 3D printed. We 3D printed hubs with gear teeth to mesh with the puttman gear motors. That gear ratio was a 2/7 slowdown. This allowed us to have a higher resolution. The main housing was held together using threaded thermal inserts and M3 bolts. The use of carbon fiber decreased the inertia of our system and allowed us to move quickly. In the CAD, we included a tilt axis at the base of our main housing. We decided to scrap this and instead move the servo to the end of the linkage next to the pen. Also, we decided to offset the pen so that it didn't act through the bearings. Epoxy was added at the joints to strengthen. Changes showed below. 
 
-![changes](./changes.PNG)
-
+![changes](./changes.png)
 
 ### Video Links 
 1 - https://youtu.be/_5m5r6dnIIY 
 2 - https://youtu.be/3c9mipRUHZs 
 3 - https://youtu.be/eMAQph7v7VM 
 
+### Software Overview 
+
+Insert a brief software overview
+
+### Results 
+
+After tuning our control system we were able to produce three distinct shapes/images: hour glass, nested circles, and a balloon. 
+
+### Takeaways 
 
