@@ -76,9 +76,10 @@ class EncoderDriver:
         self.position = 0
         return 0
         
-def degree_to_enc(degree, gear_ratio):
+def degree_to_enc(degree, gear_ratio = 1):
     '''!
-    Converts a degree measurement to encoder ticks
+    Converts a degree measurement to encoder ticks and adds a gear ratio
+    if the user knows the gear ration
     '''
     return (degree * 8192 / 360) * gear_ratio
 

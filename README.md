@@ -49,11 +49,15 @@ The majority of our components were 3D printed. We 3D printed hubs with gear tee
 
 ### Software Overview 
 
-Insert a brief software overview
+As mentioned in the mainpage, each hardware component on our machine has it's own driver. This was done so that the code could be portable and extremey modular which helped a lot with testing.
 
 ### Results 
+
+Tuning the controls was difficult as we did not have a starting point and did not want to break the 3D printed parts and have to reprint them. We first used the motors dettached from the machine to see if we could get the limit switches and angular design working. After confirming that it wouldn't break upon first use, we 
 
 After tuning our control system we were able to produce three distinct shapes/images: hour glass, nested circles, and a balloon. 
 
 ### Takeaways 
+
+One of the largest takeaways is how difficult it is to get a smooth image using our desing. We knew there would be jitter from the undampened arm desgin, but we thought that it would be negligible. Even with the lowered gearing, the resolution was still not as good as we expected it to be, even after hours of testing different feed rates and task refresh periods. In hindsight we shoul've foreseen this and either included a dampening system, included higher torque motors, or increased the gear ration so that the resolution was better.
 

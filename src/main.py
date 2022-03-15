@@ -1,6 +1,8 @@
 '''!
 @file main.py
-    This 
+    This file is the top level running the machine that draws
+    a picture using GCode. It utilizes drivers for low level
+    components and 
 @author Lucas Sandsor
 @author Jack Barone
 @author Jack Meyers
@@ -26,7 +28,10 @@ def initialize_encoders():
     @brief Initalizes the encoders to their respective positons by first
     having the motors go all the way to the right and hitting the right
     limit switch, going all the way to the left and hitting the left limit
-    switch, and then goes towards the center and waits for 1 second
+    switch, and then goes towards the center ceases all movement
+    and waits for 1 second because it caused less initialize jitter
+    All drivers have to be initliazed even though they are intialized again
+    in cotask since this function is called before cotask
     """
     servo = servoDriver.ServoDriver(pyb.Pin.board.PA8, 1)
     servo.set_duty_cycle(5)
@@ -55,6 +60,9 @@ def initialize_encoders():
     enc2.zero()
     print("SWITCH 1 DONE!")
     i = 0
+    '''Cycle based stalling was the only way that I could get this to
+    work as the motors would glitch out if I used utime.sleep or time.sleep
+    '''
     while i < 1000:
         #has it only for a few cycles so that it isn't hitting limit switch
         moe1.set_duty_cycle(40)
@@ -73,8 +81,13 @@ def initialize_encoders():
 def task0_master ():
     """!
     Takes and converts GCode and passes to to program for drawing device
+    It gets a list of tuples that we call "points" that have the format
+    [x coordinate, y coordinate, z boolean]. We then convert the x and y coordinates
+    to angles for the encoders. The z boolean is put into a share and used to tell the
+    servo whether to be up or down
     """
     i = 0
+    #filename has to be passed mannually
     points = gcode.get_instructions("balloon.nc")
     while True:
         for point in points:
@@ -86,6 +99,10 @@ def task0_master ():
              share_degree2.put(angles[1] * 180 / pi)
              share_servo.put(point[2])
              yield(0)
+        '''Decided to do a cycle stall loop since utime.sleep was not working
+        50 is a completely arbitrary number but felt like enough time for it to wait
+        for the servo to reset to high value so that it did not draw on the desk
+        '''
         for i in range(0,50,1):
             share_servo.put(5)
             yield(0)
