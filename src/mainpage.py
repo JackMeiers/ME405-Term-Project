@@ -38,13 +38,13 @@
                         
                         \image html GcodeConverterFSM.png
                         
-   @subsection State Diagram   Initialization Sequence
+   @subsection State2 Diagram   Initialization Sequence
                         This the initialization sequence that the program does as soon as it boots.
                         This ensures the the encoder values are properly zeroed and that the arms start
                         in a somewhat centered position. It also guarantees that the pen is raised while
                         initializing so that we do not draw on a surface outside our intended canvas
                         
-                        \image html IntializeFSM.png
+                        \image html InitializeFSM.png
     
    @subsection Component Drivers
                         For each of the components on the machine we have a driver alongside a

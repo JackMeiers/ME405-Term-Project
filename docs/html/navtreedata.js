@@ -29,6 +29,7 @@ var NAVTREE =
     [ "Source Code", "index.html#source", [
       [ "Diagram    Overview", "index.html#Task", null ],
       [ "Diagram   General Prototype FSM", "index.html#State", null ],
+      [ "Diagram   Initialization Sequence", "index.html#State2", null ],
       [ "Drivers", "index.html#Component", null ],
       [ "Parser", "index.html#GCode", null ]
     ] ],
