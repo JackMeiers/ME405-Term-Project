@@ -1,0 +1,154 @@
+\hypertarget{classcontrols_1_1_controls}{}\doxysection{controls.\+Controls Class Reference}
+\label{classcontrols_1_1_controls}\index{controls.Controls@{controls.Controls}}
+
+
+This class impliments the motor controller for ME405.  
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classcontrols_1_1_controls_a8ffeba0380862cf9776c13e4278ebe36}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, setpoint, gain, error\+\_\+signal)
+\begin{DoxyCompactList}\small\item\em Initalizes proportional closed loop control driver. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classcontrols_1_1_controls_a0e4e79eed5df924eca54af7c92111ef4}{control\+Loop}} (self, position)
+\begin{DoxyCompactList}\small\item\em applys proportional CL control on input signal \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classcontrols_1_1_controls_a66079f5f7db57e443b900fab2a3b5c9d}{set\+\_\+setpoint}} (self, new\+\_\+setpoint)
+\begin{DoxyCompactList}\small\item\em sets new desired set point used in CL control \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classcontrols_1_1_controls_a6fd482a7e96471086e22e5f9a9d05998}{set\+\_\+gain}} (self, new\+\_\+gain)
+\begin{DoxyCompactList}\small\item\em sets new gain value, K\+\_\+p used in CL control \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classcontrols_1_1_controls_a1e4385d4a485c931368deeb99f232208}{print\+\_\+list}} (self, time\+\_\+ms, ticks)
+\begin{DoxyCompactList}\small\item\em prints time and ticks to the user \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classcontrols_1_1_controls_ac1dc9482b2aa073df57ed36e9163ce60}{store\+\_\+list}} (self, time\+\_\+ms, ticks)
+\begin{DoxyCompactList}\small\item\em stores list of time and ticks for later data manipulation \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classcontrols_1_1_controls_a2b49959d71fb1d49dbd6e104df704f2f}\label{classcontrols_1_1_controls_a2b49959d71fb1d49dbd6e104df704f2f}} 
+{\bfseries setpoint}
+\item 
+\mbox{\Hypertarget{classcontrols_1_1_controls_a1a4a08c928df3a358b10551692e52529}\label{classcontrols_1_1_controls_a1a4a08c928df3a358b10551692e52529}} 
+{\bfseries gain}
+\item 
+\mbox{\Hypertarget{classcontrols_1_1_controls_aaf88172c4cc6bc36a3f0076437a4d559}\label{classcontrols_1_1_controls_aaf88172c4cc6bc36a3f0076437a4d559}} 
+{\bfseries error\+\_\+signal}
+\item 
+\mbox{\Hypertarget{classcontrols_1_1_controls_adc8ec8f4e42478770e204641d24cd7ab}\label{classcontrols_1_1_controls_adc8ec8f4e42478770e204641d24cd7ab}} 
+{\bfseries time\+\_\+list}
+\item 
+\mbox{\Hypertarget{classcontrols_1_1_controls_a36ae6fadce5b000a50d581792a331307}\label{classcontrols_1_1_controls_a36ae6fadce5b000a50d581792a331307}} 
+{\bfseries tick\+\_\+list}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class impliments the motor controller for ME405. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcontrols_1_1_controls_a8ffeba0380862cf9776c13e4278ebe36}\label{classcontrols_1_1_controls_a8ffeba0380862cf9776c13e4278ebe36}} 
+\index{controls.Controls@{controls.Controls}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!controls.Controls@{controls.Controls}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def controls.\+Controls.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{setpoint,  }\item[{}]{gain,  }\item[{}]{error\+\_\+signal }\end{DoxyParamCaption})}
+
+
+
+Initalizes proportional closed loop control driver. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em setpoint} & Desired \# of motor ticks for a step response ~\newline
+ \\
+\hline
+{\em gain} & K\+\_\+p which has units of percent duty cycle per encoder count @error\+\_\+signal difference between setpoint and measure value \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classcontrols_1_1_controls_a0e4e79eed5df924eca54af7c92111ef4}\label{classcontrols_1_1_controls_a0e4e79eed5df924eca54af7c92111ef4}} 
+\index{controls.Controls@{controls.Controls}!controlLoop@{controlLoop}}
+\index{controlLoop@{controlLoop}!controls.Controls@{controls.Controls}}
+\doxysubsubsection{\texorpdfstring{controlLoop()}{controlLoop()}}
+{\footnotesize\ttfamily def controls.\+Controls.\+control\+Loop (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{position }\end{DoxyParamCaption})}
+
+
+
+applys proportional CL control on input signal 
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & Input signal in ticks \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+actuation Signal produced after CL control 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classcontrols_1_1_controls_a1e4385d4a485c931368deeb99f232208}\label{classcontrols_1_1_controls_a1e4385d4a485c931368deeb99f232208}} 
+\index{controls.Controls@{controls.Controls}!print\_list@{print\_list}}
+\index{print\_list@{print\_list}!controls.Controls@{controls.Controls}}
+\doxysubsubsection{\texorpdfstring{print\_list()}{print\_list()}}
+{\footnotesize\ttfamily def controls.\+Controls.\+print\+\_\+list (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{time\+\_\+ms,  }\item[{}]{ticks }\end{DoxyParamCaption})}
+
+
+
+prints time and ticks to the user 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time\+\_\+ms} & Time in miliseconds \\
+\hline
+{\em ticks} & Encoder ticks \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classcontrols_1_1_controls_a6fd482a7e96471086e22e5f9a9d05998}\label{classcontrols_1_1_controls_a6fd482a7e96471086e22e5f9a9d05998}} 
+\index{controls.Controls@{controls.Controls}!set\_gain@{set\_gain}}
+\index{set\_gain@{set\_gain}!controls.Controls@{controls.Controls}}
+\doxysubsubsection{\texorpdfstring{set\_gain()}{set\_gain()}}
+{\footnotesize\ttfamily def controls.\+Controls.\+set\+\_\+gain (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{new\+\_\+gain }\end{DoxyParamCaption})}
+
+
+
+sets new gain value, K\+\_\+p used in CL control 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+gain} & Updated gain value K\+\_\+p \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classcontrols_1_1_controls_a66079f5f7db57e443b900fab2a3b5c9d}\label{classcontrols_1_1_controls_a66079f5f7db57e443b900fab2a3b5c9d}} 
+\index{controls.Controls@{controls.Controls}!set\_setpoint@{set\_setpoint}}
+\index{set\_setpoint@{set\_setpoint}!controls.Controls@{controls.Controls}}
+\doxysubsubsection{\texorpdfstring{set\_setpoint()}{set\_setpoint()}}
+{\footnotesize\ttfamily def controls.\+Controls.\+set\+\_\+setpoint (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{new\+\_\+setpoint }\end{DoxyParamCaption})}
+
+
+
+sets new desired set point used in CL control 
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\+\_\+setpoint} & New desired setpoint in \# ticks \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classcontrols_1_1_controls_ac1dc9482b2aa073df57ed36e9163ce60}\label{classcontrols_1_1_controls_ac1dc9482b2aa073df57ed36e9163ce60}} 
+\index{controls.Controls@{controls.Controls}!store\_list@{store\_list}}
+\index{store\_list@{store\_list}!controls.Controls@{controls.Controls}}
+\doxysubsubsection{\texorpdfstring{store\_list()}{store\_list()}}
+{\footnotesize\ttfamily def controls.\+Controls.\+store\+\_\+list (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{time\+\_\+ms,  }\item[{}]{ticks }\end{DoxyParamCaption})}
+
+
+
+stores list of time and ticks for later data manipulation 
+
+
+\begin{DoxyParams}{Parameters}
+{\em time\+\_\+ms} & Time in miliseconds \\
+\hline
+{\em ticks} & Encoder ticks \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{controls_8py}{controls.\+py}}\end{DoxyCompactItemize}

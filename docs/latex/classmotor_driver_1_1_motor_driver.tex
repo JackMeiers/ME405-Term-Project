@@ -1,0 +1,85 @@
+\hypertarget{classmotor_driver_1_1_motor_driver}{}\doxysection{motor\+Driver.\+Motor\+Driver Class Reference}
+\label{classmotor_driver_1_1_motor_driver}\index{motorDriver.MotorDriver@{motorDriver.MotorDriver}}
+
+
+This class impliments a motor driver for ME405.  
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classmotor_driver_1_1_motor_driver_a024b128eea990dffa3449a45ec80d4c4}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, en\+\_\+pin, in1pin, in2pin, timer)
+\begin{DoxyCompactList}\small\item\em Creates a motor driver by initializing GPIO pins and turning motor off. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classmotor_driver_1_1_motor_driver_adf635c9f46cbdcecb4269ff9ea071d3b}{set\+\_\+duty\+\_\+cycle}} (self, level)
+\begin{DoxyCompactList}\small\item\em This method sets duty cycle of motor to a certain level. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classmotor_driver_1_1_motor_driver_a96f4c4b205fe9995168dc8e2b49cea98}\label{classmotor_driver_1_1_motor_driver_a96f4c4b205fe9995168dc8e2b49cea98}} 
+{\bfseries pin\+EN}
+\item 
+\mbox{\Hypertarget{classmotor_driver_1_1_motor_driver_a1cc4ed1b2d155f3cc0ec3168a050d22e}\label{classmotor_driver_1_1_motor_driver_a1cc4ed1b2d155f3cc0ec3168a050d22e}} 
+{\bfseries pin\+IN1}
+\item 
+\mbox{\Hypertarget{classmotor_driver_1_1_motor_driver_a74dab0ec710aa9a8070a35b88d029af7}\label{classmotor_driver_1_1_motor_driver_a74dab0ec710aa9a8070a35b88d029af7}} 
+{\bfseries pin\+IN2}
+\item 
+\mbox{\Hypertarget{classmotor_driver_1_1_motor_driver_ac718380c0dce6e770a9101a431241579}\label{classmotor_driver_1_1_motor_driver_ac718380c0dce6e770a9101a431241579}} 
+{\bfseries tim}
+\item 
+\mbox{\Hypertarget{classmotor_driver_1_1_motor_driver_a90592f1cdce05d340b2f74b69ced0945}\label{classmotor_driver_1_1_motor_driver_a90592f1cdce05d340b2f74b69ced0945}} 
+{\bfseries ch1}
+\item 
+\mbox{\Hypertarget{classmotor_driver_1_1_motor_driver_a63c4629c19871b094ff81bd245fac3e6}\label{classmotor_driver_1_1_motor_driver_a63c4629c19871b094ff81bd245fac3e6}} 
+{\bfseries ch2}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class impliments a motor driver for ME405. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmotor_driver_1_1_motor_driver_a024b128eea990dffa3449a45ec80d4c4}\label{classmotor_driver_1_1_motor_driver_a024b128eea990dffa3449a45ec80d4c4}} 
+\index{motorDriver.MotorDriver@{motorDriver.MotorDriver}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!motorDriver.MotorDriver@{motorDriver.MotorDriver}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def motor\+Driver.\+Motor\+Driver.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{en\+\_\+pin,  }\item[{}]{in1pin,  }\item[{}]{in2pin,  }\item[{}]{timer }\end{DoxyParamCaption})}
+
+
+
+Creates a motor driver by initializing GPIO pins and turning motor off. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em en\+\_\+pin} & The enable pin for the motor \\
+\hline
+{\em in1pin} & Input pin 1 for driving the motor forwards \\
+\hline
+{\em in2pin} & Input pin 2 for driving the motor backwards \\
+\hline
+{\em timer} & The number of the timer to use (channels 1 and 2) \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmotor_driver_1_1_motor_driver_adf635c9f46cbdcecb4269ff9ea071d3b}\label{classmotor_driver_1_1_motor_driver_adf635c9f46cbdcecb4269ff9ea071d3b}} 
+\index{motorDriver.MotorDriver@{motorDriver.MotorDriver}!set\_duty\_cycle@{set\_duty\_cycle}}
+\index{set\_duty\_cycle@{set\_duty\_cycle}!motorDriver.MotorDriver@{motorDriver.MotorDriver}}
+\doxysubsubsection{\texorpdfstring{set\_duty\_cycle()}{set\_duty\_cycle()}}
+{\footnotesize\ttfamily def motor\+Driver.\+Motor\+Driver.\+set\+\_\+duty\+\_\+cycle (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{level }\end{DoxyParamCaption})}
+
+
+
+This method sets duty cycle of motor to a certain level. 
+
+Positive cuase torque in one direction and negative causes torque in another If the duty cycle is out of the acceptable range, it will prin 
+\begin{DoxyParams}{Parameters}
+{\em level} & The duty cycle level to run the motor at (-\/100 to 100) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{motor_driver_8py}{motor\+Driver.\+py}}\end{DoxyCompactItemize}

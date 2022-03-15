@@ -1,0 +1,29 @@
+\hypertarget{index_wel}{}\doxysection{Howdy!}\label{index_wel}
+This website serves as documentation of all labs and projects done during the Winter of 2022 in ME 405 -\/ Mechatronics. If you have any questions, please contact\+: \href{mailto:baronejohn00@gmail.com}{\texttt{ baronejohn00@gmail.\+com}} or \href{mailto:lukesandsor@aol.com}{\texttt{ lukesandsor@aol.\+com}} or \href{mailto:jpmeyers@calpoly.edu}{\texttt{ jpmeyers@calpoly.\+edu}}
+
+The majority of assignments are drivers on controlling a motors to control a pen plotter that takes G code and uses a sharpie to draw that picture.\hypertarget{index_source}{}\doxysection{Source Code}\label{index_source}
+All source code for this project is available here\+: \href{https://github.com/JackMeiers/ME405-Term-Project}{\texttt{ https\+://github.\+com/\+Jack\+Meiers/\+ME405-\/\+Term-\/\+Project}}\hypertarget{index_Task}{}\doxysubsection{Diagram    Overview}\label{index_Task}
+This is the overhead of the main task diagram that will run our program.
+
+
+
+This is the high level task diagram used to run our program\hypertarget{index_State}{}\doxysubsection{Diagram   General Prototype FSM}\label{index_State}
+This is the prototype FSM used to outline the general way that we wanted out code to run. It was how we structured the task diagram and is the basis for our entire program. Though not followed exactly it outlines key steps in making our machine work
+
+\hypertarget{index_State}{}\doxysubsection{Diagram   General Prototype FSM}\label{index_State}
+This the initialization sequence that the program does as soon as it boots. This ensures the the encoder values are properly zeroed and that the arms start in a somewhat centered position. It also guarantees that the pen is raised while initializing so that we do not draw on a surface outside our intended canvas
+
+\hypertarget{index_Component}{}\doxysubsection{Drivers}\label{index_Component}
+For each of the components on the machine we have a driver alongside a non-\/component driver in the shape of a motor controller built using software. Each of these drivers is used in the higher level functions\hypertarget{index_GCode}{}\doxysubsection{Parser}\label{index_GCode}
+We needed a way to analyze and interact with a GCode file when it is passed to the board. The\char`\"{}gcode.\+py\char`\"{} module is used for this and passes the parsed GCode in the format of \mbox{[}x,y,z\mbox{]} using a tuple. The file name must be edited in \char`\"{}main.\+py\char`\"{} and loaded on the board
+
+\begin{DoxyAuthor}{Author}
+Jack Barone 
+
+Jack Meyers 
+
+Luke Sandsor
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+February 25th, 2022 
+\end{DoxyDate}

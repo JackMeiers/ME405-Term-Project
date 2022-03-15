@@ -1,0 +1,96 @@
+\hypertarget{classencoder_driver_1_1_encoder_driver}{}\doxysection{encoder\+Driver.\+Encoder\+Driver Class Reference}
+\label{classencoder_driver_1_1_encoder_driver}\index{encoderDriver.EncoderDriver@{encoderDriver.EncoderDriver}}
+
+
+This class impliments and encoder for ME405.  
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classencoder_driver_1_1_encoder_driver_a50fc83f6ba8d5ee0b0fa0741fdce9a50}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, in1pin, in2pin, timer)
+\begin{DoxyCompactList}\small\item\em Creates an encoder driver by initializing GPIO pins and reading signal output from two channels and comparing them to see what the direction of movement is. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classencoder_driver_1_1_encoder_driver_a371495de00ba483c73eecd64a8d69a65}{update}} (self)
+\begin{DoxyCompactList}\small\item\em Handles overflow for the counter by creating a differential between the last counted number and the counted number at run time. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_aff53189119c58a89253b96ba09f5cdf6}\label{classencoder_driver_1_1_encoder_driver_aff53189119c58a89253b96ba09f5cdf6}} 
+def {\bfseries read} (self)
+\begin{DoxyCompactList}\small\item\em Reads the current position of the motor using the past update function and then priting the value of the encoder to the user. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_a387e6a9aa1c858c918129a2917cebaae}\label{classencoder_driver_1_1_encoder_driver_a387e6a9aa1c858c918129a2917cebaae}} 
+def {\bfseries zero} (self)
+\begin{DoxyCompactList}\small\item\em Resets the position of the encoder to zero. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_a814d51a1e8d1eb34f89245460a07bf4b}\label{classencoder_driver_1_1_encoder_driver_a814d51a1e8d1eb34f89245460a07bf4b}} 
+{\bfseries period}
+\item 
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_a508209a91f0583c1baf330e3f6d37f3a}\label{classencoder_driver_1_1_encoder_driver_a508209a91f0583c1baf330e3f6d37f3a}} 
+{\bfseries pin\+IN1}
+\item 
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_aeb56f85d51c6128da01211a5d7a5e010}\label{classencoder_driver_1_1_encoder_driver_aeb56f85d51c6128da01211a5d7a5e010}} 
+{\bfseries pin\+IN2}
+\item 
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_a8d8f32240f16a56e31dbc12b51181833}\label{classencoder_driver_1_1_encoder_driver_a8d8f32240f16a56e31dbc12b51181833}} 
+{\bfseries tim}
+\item 
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_ac497ee0b7ff26b4c5aee86fe8b2599c3}\label{classencoder_driver_1_1_encoder_driver_ac497ee0b7ff26b4c5aee86fe8b2599c3}} 
+{\bfseries ch1}
+\item 
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_afc44acacbaa8b3227874f100af6863c3}\label{classencoder_driver_1_1_encoder_driver_afc44acacbaa8b3227874f100af6863c3}} 
+{\bfseries ch2}
+\item 
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_af97aaf18ba048f0173e3f6f772d5e7d5}\label{classencoder_driver_1_1_encoder_driver_af97aaf18ba048f0173e3f6f772d5e7d5}} 
+{\bfseries count}
+\item 
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_a1470286e94d3d34f12175908082c2211}\label{classencoder_driver_1_1_encoder_driver_a1470286e94d3d34f12175908082c2211}} 
+{\bfseries last\+Count}
+\item 
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_ab0c6b51d48afdab178259e4aa71806c7}\label{classencoder_driver_1_1_encoder_driver_ab0c6b51d48afdab178259e4aa71806c7}} 
+{\bfseries position}
+\item 
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_accdf9df8f9751b4af3285840ddb95155}\label{classencoder_driver_1_1_encoder_driver_accdf9df8f9751b4af3285840ddb95155}} 
+{\bfseries delta}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class impliments and encoder for ME405. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_a50fc83f6ba8d5ee0b0fa0741fdce9a50}\label{classencoder_driver_1_1_encoder_driver_a50fc83f6ba8d5ee0b0fa0741fdce9a50}} 
+\index{encoderDriver.EncoderDriver@{encoderDriver.EncoderDriver}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!encoderDriver.EncoderDriver@{encoderDriver.EncoderDriver}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def encoder\+Driver.\+Encoder\+Driver.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{in1pin,  }\item[{}]{in2pin,  }\item[{}]{timer }\end{DoxyParamCaption})}
+
+
+
+Creates an encoder driver by initializing GPIO pins and reading signal output from two channels and comparing them to see what the direction of movement is. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em in1pin} & The input pin for one for one of the scanners on the encoder measuring ticks \\
+\hline
+{\em in2pin} & The input pin for a different scanner seperated by a half cycle from the other encoder \\
+\hline
+{\em timer} & The timer on the STM32 that works in counter mode that allows us to track ticks for the encoder \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classencoder_driver_1_1_encoder_driver_a371495de00ba483c73eecd64a8d69a65}\label{classencoder_driver_1_1_encoder_driver_a371495de00ba483c73eecd64a8d69a65}} 
+\index{encoderDriver.EncoderDriver@{encoderDriver.EncoderDriver}!update@{update}}
+\index{update@{update}!encoderDriver.EncoderDriver@{encoderDriver.EncoderDriver}}
+\doxysubsubsection{\texorpdfstring{update()}{update()}}
+{\footnotesize\ttfamily def encoder\+Driver.\+Encoder\+Driver.\+update (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Handles overflow for the counter by creating a differential between the last counted number and the counted number at run time. 
+
+If there is overflow, the differential will be greater or less than the period (-\/self.\+period/2 to self.\+period/2 is equals to one period) and the code will adjust the number accordingly 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{encoder_driver_8py}{encoder\+Driver.\+py}}\end{DoxyCompactItemize}

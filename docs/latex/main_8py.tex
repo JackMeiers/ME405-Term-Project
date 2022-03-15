@@ -1,0 +1,245 @@
+\hypertarget{main_8py}{}\doxysection{src/main.py File Reference}
+\label{main_8py}\index{src/main.py@{src/main.py}}
+
+
+This file is the top level running the machine that draws a picture using GCode.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8py_ae59f98a3fa5e8d41a067d30ad9c3915f}\label{main_8py_ae59f98a3fa5e8d41a067d30ad9c3915f}} 
+def {\bfseries main.\+initialize\+\_\+encoders} ()
+\begin{DoxyCompactList}\small\item\em Initalizes the encoders to their respective positons by first having the motors go all the way to the right and hitting the right limit switch, going all the way to the left and hitting the left limit switch, and then goes towards the center ceases all movement and waits for 1 second because it caused less initialize jitter All drivers have to be initliazed even though they are intialized again in cotask since this function is called before cotask. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{main_8py_ab5fe659b65a916c6c048a7e9a8f25d41}{main.\+task0\+\_\+master}} ()
+\begin{DoxyCompactList}\small\item\em Takes and converts GCode and passes to to program for drawing device It gets a list of tuples that we call \char`\"{}points\char`\"{} that have the format \mbox{[}x coordinate, y coordinate, z boolean\mbox{]}. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{main_8py_a32635a29e04e95ad9e6553196a4b0cfc}{main.\+task1\+\_\+encoder1}} ()
+\begin{DoxyCompactList}\small\item\em This task creates a driver for one of the encoders being used. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8py_a13c2247e9fafae9c553ff75a1d7a1e42}\label{main_8py_a13c2247e9fafae9c553ff75a1d7a1e42}} 
+def {\bfseries main.\+task2\+\_\+motor1} ()
+\item 
+def \mbox{\hyperlink{main_8py_a8c0995cae91dd24b36e4e211d4ec13c0}{main.\+task3\+\_\+control1}} ()
+\begin{DoxyCompactList}\small\item\em This task creates the controller that initilaizes the motors and a controller for each motor with a default arbitary value ( + or -\/ 16092, but probably could have used a default of 45 degrees but was worried it would break code). \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{main_8py_a2bc81b8534a42f803558eceb49eac35c}{main.\+task4\+\_\+encoder2}} ()
+\begin{DoxyCompactList}\small\item\em This task creates a driver for one of the encoders being used. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{main_8py_ae5097cb29c31cfeab160cbcc0cc7fb87}\label{main_8py_ae5097cb29c31cfeab160cbcc0cc7fb87}} 
+def {\bfseries main.\+task5\+\_\+motor2} ()
+\item 
+\mbox{\Hypertarget{main_8py_a8f5ad024fb1d5ace8033bb3aa2f54895}\label{main_8py_a8f5ad024fb1d5ace8033bb3aa2f54895}} 
+def {\bfseries main.\+task6\+\_\+control2} ()
+\item 
+\mbox{\Hypertarget{main_8py_a680cdb56a9dcecc34a63c21c3786d5a1}\label{main_8py_a680cdb56a9dcecc34a63c21c3786d5a1}} 
+def {\bfseries main.\+task7\+\_\+servo} ()
+\begin{DoxyCompactList}\small\item\em This task takes the value from the Servo share which is manipulated by the main GCode parser. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{main_8py_a79ba20cd0d82cdc81f79cb3999170f27}\label{main_8py_a79ba20cd0d82cdc81f79cb3999170f27}} 
+{\bfseries main.\+share\+\_\+servo} = \mbox{\hyperlink{classtask__share_1_1_share}{task\+\_\+share.\+Share}} (\textquotesingle{}i\textquotesingle{}, thread\+\_\+protect = False, name = \char`\"{}Share Servo\char`\"{})
+\item 
+\mbox{\Hypertarget{main_8py_a57c3229e23c586acad64d57add3b63a3}\label{main_8py_a57c3229e23c586acad64d57add3b63a3}} 
+{\bfseries main.\+share\+\_\+degree1} = \mbox{\hyperlink{classtask__share_1_1_share}{task\+\_\+share.\+Share}} (\textquotesingle{}f\textquotesingle{}, thread\+\_\+protect = False, name = \char`\"{}Share Degree 1\char`\"{})
+\item 
+\mbox{\Hypertarget{main_8py_a82c5c700681964c56c95a3aca5f7babf}\label{main_8py_a82c5c700681964c56c95a3aca5f7babf}} 
+{\bfseries main.\+share\+\_\+degree2} = \mbox{\hyperlink{classtask__share_1_1_share}{task\+\_\+share.\+Share}} (\textquotesingle{}f\textquotesingle{}, thread\+\_\+protect = False, name = \char`\"{}Share Degree 2\char`\"{})
+\item 
+\mbox{\Hypertarget{main_8py_a262ecfc235fbfafd0601848a5f52980d}\label{main_8py_a262ecfc235fbfafd0601848a5f52980d}} 
+{\bfseries main.\+share\+\_\+enc1} = \mbox{\hyperlink{classtask__share_1_1_share}{task\+\_\+share.\+Share}} (\textquotesingle{}f\textquotesingle{}, thread\+\_\+protect = False, name = \char`\"{}Share Encoder 1\char`\"{})
+\item 
+\mbox{\Hypertarget{main_8py_ac6ab0240feb9922f841f03251e418bae}\label{main_8py_ac6ab0240feb9922f841f03251e418bae}} 
+{\bfseries main.\+share\+\_\+enc2} = \mbox{\hyperlink{classtask__share_1_1_share}{task\+\_\+share.\+Share}} (\textquotesingle{}f\textquotesingle{}, thread\+\_\+protect = False, name = \char`\"{}Share Encoder 2\char`\"{})
+\item 
+\mbox{\Hypertarget{main_8py_a96a1b29f5a9dab9e747da7b8e2fc9e38}\label{main_8py_a96a1b29f5a9dab9e747da7b8e2fc9e38}} 
+{\bfseries main.\+share\+\_\+motor1} = \mbox{\hyperlink{classtask__share_1_1_share}{task\+\_\+share.\+Share}} (\textquotesingle{}f\textquotesingle{}, thread\+\_\+protect = False, name = \char`\"{}Share Motor 1\char`\"{})
+\item 
+\mbox{\Hypertarget{main_8py_adc7662f1b798372f136289dc67b65905}\label{main_8py_adc7662f1b798372f136289dc67b65905}} 
+{\bfseries main.\+share\+\_\+motor2} = \mbox{\hyperlink{classtask__share_1_1_share}{task\+\_\+share.\+Share}} (\textquotesingle{}f\textquotesingle{}, thread\+\_\+protect = False, name = \char`\"{}Share Motor 2\char`\"{})
+\item 
+\mbox{\hyperlink{main_8py_a47bfb4858b2750d0b9844735c9ae7488}{main.\+task0}}
+\item 
+\mbox{\hyperlink{main_8py_af4b8f4290f8d32e70654f6deb864787f}{main.\+task1}}
+\item 
+\mbox{\hyperlink{main_8py_a99d189b8f9eb3784cf7d4e5c3241b562}{main.\+task2}}
+\item 
+\mbox{\hyperlink{main_8py_a120516a5d42c212c898d4616d266077a}{main.\+task3}}
+\item 
+\mbox{\hyperlink{main_8py_ac0ee3c5b5359f76becfe27534e82085f}{main.\+task4}}
+\item 
+\mbox{\hyperlink{main_8py_a11ec9e490c402876467b9fdadecc93e8}{main.\+task5}}
+\item 
+\mbox{\hyperlink{main_8py_a4ff32207e9201d99684e38af7bee4d5d}{main.\+task6}}
+\item 
+\mbox{\hyperlink{main_8py_aebef59d830c2aef562d9b0f73bb4c0b3}{main.\+task7}}
+\item 
+\mbox{\Hypertarget{main_8py_a5854bd125b139389df502649ad7b0c9c}\label{main_8py_a5854bd125b139389df502649ad7b0c9c}} 
+{\bfseries main.\+vcp} = pyb.\+USB\+\_\+\+VCP ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file is the top level running the machine that draws a picture using GCode. 
+
+This file contains all the funcitons printing out a graph of the encoder position to help us visualize the runtime nature of the motor.
+
+It utilizes drivers for low level components and \begin{DoxyAuthor}{Author}
+Lucas Sandsor 
+
+Jack Barone 
+
+Jack Meyers 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+22-\/Feb-\/2022
+\end{DoxyDate}
+\begin{DoxyAuthor}{Author}
+Lucas Sandsor 
+
+Jack Barone 
+
+Jackson Myers 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+25-\/Jan-\/2022 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{main_8py_ab5fe659b65a916c6c048a7e9a8f25d41}\label{main_8py_ab5fe659b65a916c6c048a7e9a8f25d41}} 
+\index{main.py@{main.py}!task0\_master@{task0\_master}}
+\index{task0\_master@{task0\_master}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{task0\_master()}{task0\_master()}}
+{\footnotesize\ttfamily def main.\+task0\+\_\+master (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Takes and converts GCode and passes to to program for drawing device It gets a list of tuples that we call \char`\"{}points\char`\"{} that have the format \mbox{[}x coordinate, y coordinate, z boolean\mbox{]}. 
+
+We then convert the x and y coordinates to angles for the encoders. The z boolean is put into a share and used to tell the servo whether to be up or down \mbox{\Hypertarget{main_8py_a32635a29e04e95ad9e6553196a4b0cfc}\label{main_8py_a32635a29e04e95ad9e6553196a4b0cfc}} 
+\index{main.py@{main.py}!task1\_encoder1@{task1\_encoder1}}
+\index{task1\_encoder1@{task1\_encoder1}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{task1\_encoder1()}{task1\_encoder1()}}
+{\footnotesize\ttfamily def main.\+task1\+\_\+encoder1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This task creates a driver for one of the encoders being used. 
+
+It puts the curent value of the encoder into a share to be used by other tasks There is a limit switch, and when pressed, it shows a unique message to the screen, zeros the encoder, stops the motor, puts zero into both encoder shares for this limit switch \mbox{\Hypertarget{main_8py_a8c0995cae91dd24b36e4e211d4ec13c0}\label{main_8py_a8c0995cae91dd24b36e4e211d4ec13c0}} 
+\index{main.py@{main.py}!task3\_control1@{task3\_control1}}
+\index{task3\_control1@{task3\_control1}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{task3\_control1()}{task3\_control1()}}
+{\footnotesize\ttfamily def main.\+task3\+\_\+control1 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This task creates the controller that initilaizes the motors and a controller for each motor with a default arbitary value ( + or -\/ 16092, but probably could have used a default of 45 degrees but was worried it would break code). 
+
+The encoder value is then converted to an angle and is set as the new destination for the controller. The motor is set at the appropriate speed it should be at for reaching that destination Different gains work better for different images. Gain = 3000 for very curvy images. Gain = 5000 for more line heavy images. \mbox{\Hypertarget{main_8py_a2bc81b8534a42f803558eceb49eac35c}\label{main_8py_a2bc81b8534a42f803558eceb49eac35c}} 
+\index{main.py@{main.py}!task4\_encoder2@{task4\_encoder2}}
+\index{task4\_encoder2@{task4\_encoder2}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{task4\_encoder2()}{task4\_encoder2()}}
+{\footnotesize\ttfamily def main.\+task4\+\_\+encoder2 (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+This task creates a driver for one of the encoders being used. 
+
+It puts the curent value of the encoder into a share to be used by other tasks There is a limit switch, and when pressed, it shows a unique message to the screen, zeros the encoder, stops the motor, puts zero into both encoder shares for this limit switch 
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{main_8py_a47bfb4858b2750d0b9844735c9ae7488}\label{main_8py_a47bfb4858b2750d0b9844735c9ae7488}} 
+\index{main.py@{main.py}!task0@{task0}}
+\index{task0@{task0}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{task0}{task0}}
+{\footnotesize\ttfamily main.\+task0}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}} (task0\_master, name = \textcolor{stringliteral}{'Master'}, priority = 4, }
+\DoxyCodeLine{2                          period = 120, profile = \textcolor{keyword}{True}, trace = \textcolor{keyword}{False})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{main_8py_af4b8f4290f8d32e70654f6deb864787f}\label{main_8py_af4b8f4290f8d32e70654f6deb864787f}} 
+\index{main.py@{main.py}!task1@{task1}}
+\index{task1@{task1}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{task1}{task1}}
+{\footnotesize\ttfamily main.\+task1}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}} (task1\_encoder1, name = \textcolor{stringliteral}{'Encoder1'}, priority = 2, }
+\DoxyCodeLine{2                          period = 5, profile = \textcolor{keyword}{True}, trace = \textcolor{keyword}{False})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{main_8py_a99d189b8f9eb3784cf7d4e5c3241b562}\label{main_8py_a99d189b8f9eb3784cf7d4e5c3241b562}} 
+\index{main.py@{main.py}!task2@{task2}}
+\index{task2@{task2}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{task2}{task2}}
+{\footnotesize\ttfamily main.\+task2}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}} (task2\_motor1, name = \textcolor{stringliteral}{'Motor1'}, priority = 1, }
+\DoxyCodeLine{2                          period = 3, profile = \textcolor{keyword}{True}, trace = \textcolor{keyword}{False})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{main_8py_a120516a5d42c212c898d4616d266077a}\label{main_8py_a120516a5d42c212c898d4616d266077a}} 
+\index{main.py@{main.py}!task3@{task3}}
+\index{task3@{task3}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{task3}{task3}}
+{\footnotesize\ttfamily main.\+task3}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}} (task3\_control1, name = \textcolor{stringliteral}{'Controller1'}, priority = 1, }
+\DoxyCodeLine{2                          period = 0.1, profile = \textcolor{keyword}{True}, trace = \textcolor{keyword}{False})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{main_8py_ac0ee3c5b5359f76becfe27534e82085f}\label{main_8py_ac0ee3c5b5359f76becfe27534e82085f}} 
+\index{main.py@{main.py}!task4@{task4}}
+\index{task4@{task4}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{task4}{task4}}
+{\footnotesize\ttfamily main.\+task4}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}} (task4\_encoder2, name = \textcolor{stringliteral}{'Encoder2'}, priority = 2, }
+\DoxyCodeLine{2                          period = 10, profile = \textcolor{keyword}{True}, trace = \textcolor{keyword}{False})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{main_8py_a11ec9e490c402876467b9fdadecc93e8}\label{main_8py_a11ec9e490c402876467b9fdadecc93e8}} 
+\index{main.py@{main.py}!task5@{task5}}
+\index{task5@{task5}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{task5}{task5}}
+{\footnotesize\ttfamily main.\+task5}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}} (task5\_motor2, name = \textcolor{stringliteral}{'Motor2'}, priority = 1, }
+\DoxyCodeLine{2                          period = 6, profile = \textcolor{keyword}{True}, trace = \textcolor{keyword}{False})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{main_8py_a4ff32207e9201d99684e38af7bee4d5d}\label{main_8py_a4ff32207e9201d99684e38af7bee4d5d}} 
+\index{main.py@{main.py}!task6@{task6}}
+\index{task6@{task6}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{task6}{task6}}
+{\footnotesize\ttfamily main.\+task6}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}} (task6\_control2, name = \textcolor{stringliteral}{'Controller2'}, priority = 1, }
+\DoxyCodeLine{2                          period = 1, profile = \textcolor{keyword}{True}, trace = \textcolor{keyword}{False})}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{main_8py_aebef59d830c2aef562d9b0f73bb4c0b3}\label{main_8py_aebef59d830c2aef562d9b0f73bb4c0b3}} 
+\index{main.py@{main.py}!task7@{task7}}
+\index{task7@{task7}!main.py@{main.py}}
+\doxysubsubsection{\texorpdfstring{task7}{task7}}
+{\footnotesize\ttfamily main.\+task7}
+
+{\bfseries Initial value\+:}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 =  \mbox{\hyperlink{classcotask_1_1_task}{cotask.Task}} (task7\_servo, name = \textcolor{stringliteral}{'Servo'}, priority = 5, }
+\DoxyCodeLine{2                          period = 20, profile = \textcolor{keyword}{True}, trace = \textcolor{keyword}{False})}
+
+\end{DoxyCode}

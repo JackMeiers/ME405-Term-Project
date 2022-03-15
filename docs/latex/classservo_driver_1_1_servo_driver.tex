@@ -1,0 +1,72 @@
+\hypertarget{classservo_driver_1_1_servo_driver}{}\doxysection{servo\+Driver.\+Servo\+Driver Class Reference}
+\label{classservo_driver_1_1_servo_driver}\index{servoDriver.ServoDriver@{servoDriver.ServoDriver}}
+
+
+This class impliments a servo driver for ME405.  
+
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classservo_driver_1_1_servo_driver_acf5f7699def776c44a1247a012b80abf}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, in1pin, timer)
+\begin{DoxyCompactList}\small\item\em Creates a servo driver. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classservo_driver_1_1_servo_driver_a76bb71a50493144294a885d727e64abb}{set\+\_\+duty\+\_\+cycle}} (self, level)
+\begin{DoxyCompactList}\small\item\em This method sets duty cycle of motor to a certain level. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classservo_driver_1_1_servo_driver_a0ef90a40dd8699bc96e644f13f9483a7}\label{classservo_driver_1_1_servo_driver_a0ef90a40dd8699bc96e644f13f9483a7}} 
+{\bfseries pin\+IN1}
+\item 
+\mbox{\Hypertarget{classservo_driver_1_1_servo_driver_aecea358ddb790928f120549728461790}\label{classservo_driver_1_1_servo_driver_aecea358ddb790928f120549728461790}} 
+{\bfseries tim}
+\item 
+\mbox{\Hypertarget{classservo_driver_1_1_servo_driver_a128fa862b5c61677dbecbec52d74ae94}\label{classservo_driver_1_1_servo_driver_a128fa862b5c61677dbecbec52d74ae94}} 
+{\bfseries ch1}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class impliments a servo driver for ME405. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classservo_driver_1_1_servo_driver_acf5f7699def776c44a1247a012b80abf}\label{classservo_driver_1_1_servo_driver_acf5f7699def776c44a1247a012b80abf}} 
+\index{servoDriver.ServoDriver@{servoDriver.ServoDriver}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!servoDriver.ServoDriver@{servoDriver.ServoDriver}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def servo\+Driver.\+Servo\+Driver.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{in1pin,  }\item[{}]{timer }\end{DoxyParamCaption})}
+
+
+
+Creates a servo driver. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em in1pin} & Input pin 1 for driving the motor forwards \\
+\hline
+{\em timer} & The number of the timer to use (channels 1 and 2) \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classservo_driver_1_1_servo_driver_a76bb71a50493144294a885d727e64abb}\label{classservo_driver_1_1_servo_driver_a76bb71a50493144294a885d727e64abb}} 
+\index{servoDriver.ServoDriver@{servoDriver.ServoDriver}!set\_duty\_cycle@{set\_duty\_cycle}}
+\index{set\_duty\_cycle@{set\_duty\_cycle}!servoDriver.ServoDriver@{servoDriver.ServoDriver}}
+\doxysubsubsection{\texorpdfstring{set\_duty\_cycle()}{set\_duty\_cycle()}}
+{\footnotesize\ttfamily def servo\+Driver.\+Servo\+Driver.\+set\+\_\+duty\+\_\+cycle (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{level }\end{DoxyParamCaption})}
+
+
+
+This method sets duty cycle of motor to a certain level. 
+
+Positive cuase torque in one direction and negative causes torque in another If the duty cycle is out of the acceptable range, it will prin 
+\begin{DoxyParams}{Parameters}
+{\em level} & The duty cycle level to run the motor at (-\/100 to 100) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+src/\mbox{\hyperlink{servo_driver_8py}{servo\+Driver.\+py}}\end{DoxyCompactItemize}

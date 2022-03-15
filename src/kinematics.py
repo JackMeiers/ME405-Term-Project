@@ -17,6 +17,9 @@ from math import sqrt
 
 def convertToEncoderAngles(x, y):
     """!based off the kinematic equations created in kinematics.PNG
+        Barage of print statements was for troubleshooting as the math in
+        image was off and we did not account for the offset fo the pen not
+        being at the junction bearing.
         @retuns Tuple containing the angle for the first encoder and
         the angle for the second encoder
     """
@@ -78,8 +81,9 @@ def convertToEncoderAngles(x, y):
     
     
 def arccos(radians):
-    """!created a new arccos using math.acos with improvements
-    for usage"
+    """!
+    @brief   Created a new arccos using math.acos with improvements
+    for usage as acos assumes you use values adjusted for domains
     """
     if radians <= 0:
         radians = (radians % -pi)
