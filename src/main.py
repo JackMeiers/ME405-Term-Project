@@ -61,7 +61,7 @@ def initialize_encoders():
     print("SWITCH 1 DONE!")
     i = 0
     '''Cycle based stalling was the only way that I could get this to
-    work as the motors would glitch out if I used utime.sleep or time.sleep
+    work as the motors would glitch out if I used utime.sleep or time.sleep()
     '''
     while i < 1000:
         #has it only for a few cycles so that it isn't hitting limit switch
@@ -141,10 +141,16 @@ def task2_motor1 ():
         
 def task3_control1 ():
     """!
-    This task creates a controller
-    This encoder is 
+    This task creates the controller that initilaizes the motors
+    and a controller for each motor with a default arbitary value
+    ( + or - 16092, but probably could have used a default of 45 degrees but was worried
+    it would break code). The encoder value is then converted to an angle
+    and is set as the new destination for the controller. The motor is set at
+    the appropriate speed it should be at for reaching that destination
+    Different gains work better for different images.
+    Gain = 3000 for very curvy images.
+    Gain = 5000 for more line heavy images.
     """
-    #starts off at 5 degrees
     moe1 = motorDriver.MotorDriver(pyb.Pin.board.PA10,
         pyb.Pin.board.PB4, pyb.Pin.board.PB5, 3)
     moe2 = motorDriver.MotorDriver(pyb.Pin.board.PC1,
@@ -153,12 +159,14 @@ def task3_control1 ():
     controller2 = controls.Controls(16092, 3000/8192, 0)
     while True:
         controller1.set_setpoint(-encoderDriver.degree_to_enc(share_degree1.get(), (7 / 2)))
-        controller2.set_setpoint(encoderDriver.degree_to_enc(share_degree2.get(), (7/2)))
+        controller2.set_setpoint(encoderDriver.degree_to_enc(share_degree2.get(), (7 / 2)))
         moe2.set_duty_cycle(controller2.controlLoop(share_enc2.get()))
         moe1.set_duty_cycle(controller1.controlLoop(share_enc1.get()))
         yield(0)
 
-'''def task4_limitSwitch ():
+'''
+Phased out as having limit switch outside encoder was not logical
+def task4_limitSwitch ():
     """!
     """
     switch = switchDriver(pyb.Pin.board.PC2)

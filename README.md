@@ -49,11 +49,11 @@ The majority of our components were 3D printed. We 3D printed hubs with gear tee
 
 ### Software Overview 
 
-As mentioned in the mainpage, each hardware component on our machine has it's own driver. This was done so that the code could be portable and extremey modular which helped a lot with testing.
+As mentioned in the mainpage, each hardware component on our machine has it's own driver. This was done so that the code could be portable and extremey modular which helped a lot with testing. Some problems with our software is that it has a lot of "magic numbers", and although we explain them in the code, they have no math to back them up. This is largely because we have no way to know exactly how long and at what period the cotasks for each function should be. Gain also varied between different pictures to get the best resolution.
 
 ### Results 
 
-Tuning the controls was difficult as we did not have a starting point and did not want to break the 3D printed parts and have to reprint them. We first used the motors dettached from the machine to see if we could get the limit switches and angular design working. After confirming that it wouldn't break upon first use, we 
+Testing: Tuning the controls was difficult as we did not have a starting point and did not want to break the 3D printed parts and have to reprint them. We first used the motors dettached from the machine to see if we could get the limit switches and angular design working. After confirming that it wouldn't break upon first use, we attached everything together while manually zeroing the encoders just to see if we could draw a line. We then slowly started adding in elements of the GCode parser until we got it drawing very very low resolution images. We then fine tuned the gains and refresh rates for a better resolution. After that was working we added the initialization sequence which gave us the most trouble out of all parts. After finicking with it we got it working and then added the servo to raise and lower the pen.
 
 After tuning our control system we were able to produce three distinct shapes/images: hour glass, nested circles, and a balloon. 
 
