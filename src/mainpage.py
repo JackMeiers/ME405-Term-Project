@@ -36,7 +36,7 @@
                         basis for our entire program. Though not followed exactly it outlines
                         key steps in making our machine work
                         
-                        \image html GcodeConverterFSM.png
+                        \image html GCodeConverterFSM.png
                         
    @subsection State2 Diagram   Initialization Sequence
                         This the initialization sequence that the program does as soon as it boots.

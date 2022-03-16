@@ -1,0 +1,288 @@
+\hypertarget{gcode_8py}{}\doxysection{C\+:/\+Users/15303/\+Documents/\+Git\+Hub/\+ME405-\/\+Term-\/\+Project/src/gcode.py File Reference}
+\label{gcode_8py}\index{C:/Users/15303/Documents/GitHub/ME405-\/Term-\/Project/src/gcode.py@{C:/Users/15303/Documents/GitHub/ME405-\/Term-\/Project/src/gcode.py}}
+
+
+Contains definitions for G code instruction object and basic translation functions.  
+
+
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classgcode_1_1g__code__instruction}{gcode.\+g\+\_\+code\+\_\+instruction}}
+\begin{DoxyCompactList}\small\item\em Defines a basic structure for holding G code instructions. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{classgcode_1_1g__code__settings}{gcode.\+g\+\_\+code\+\_\+settings}}
+\begin{DoxyCompactList}\small\item\em Holds settings between function runs. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{gcode_8py_aa57c580bc38c26814fd9863d9cd10ec9}{gcode.\+get\+\_\+instructions}} (filepath)
+\begin{DoxyCompactList}\small\item\em Opens a g code file and gets a list of all the instructions. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{gcode_8py_a39aef5541b0b5661e4186ce006a6e7a1}{gcode.\+execute}} (instruction, position, settings)
+\begin{DoxyCompactList}\small\item\em Generates the points for a given instruction. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{gcode_8py_a72048bc6eefd222f272017199ab55152}{gcode.\+distance}} (start, end)
+\begin{DoxyCompactList}\small\item\em Calculates the distance between two points. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{gcode_8py_a93d5dc4bbe6cc25e253b9c2fe8e1636e}{gcode.\+linear}} (pos, x\+\_\+rel, y\+\_\+rel, pen, feed=-\/1)
+\begin{DoxyCompactList}\small\item\em Generates the set of points for drawing a line. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{gcode_8py_a02f8aad5c89616a2908cfa9c015b32bc}{gcode.\+arc}} (pos, direction, i, j, pen, feed, x\+\_\+rel=0, y\+\_\+rel=0)
+\begin{DoxyCompactList}\small\item\em Generates and returns the set of points to draw an arc. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{gcode_8py_a11b7b7dbdf4f7422b1bd054f105f4d32}{gcode.\+find\+\_\+j}} (r, x, y)
+\begin{DoxyCompactList}\small\item\em Calculates the y coordinate of the center of an arc based on the radius and end point. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{gcode_8py_a208d1f9c0bc5ad0c81ae955a33fef845}{gcode.\+find\+\_\+i}} (r, j)
+\begin{DoxyCompactList}\small\item\em Calculates the x coordinate of the center of the arc, based on the radius and the center\textquotesingle{}s y coordinate. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{gcode_8py_a56a564e5a109ca497e01bdc4b43ef0de}{gcode.\+arcr}} (pos, direction, r, pen, feed, x\+\_\+rel=0, y\+\_\+rel=0)
+\begin{DoxyCompactList}\small\item\em Generates and returns the set of points to draw an arc. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{gcode_8py_abc50f90163fd256df91076f274eb89d3}{gcode.\+abs\+\_\+to\+\_\+rel}} (current\+\_\+pos, x, y)
+\begin{DoxyCompactList}\small\item\em Converts a point in absolute space, to a point relative to the passed position. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{gcode_8py_ab76eccd212aa17f7fca7314695f9ce00}{gcode.\+rel\+\_\+to\+\_\+abs}} (current\+\_\+pos, x, y)
+\begin{DoxyCompactList}\small\item\em Converts a point in relative space to absolute space. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{gcode_8py_a70e7b7facb6f8136976acb2b33a1692c}{gcode.\+apply\+\_\+offset}} (point)
+\begin{DoxyCompactList}\small\item\em Applies an offset to convert from absolute space to the robot\textquotesingle{}s drawing space. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{gcode_8py_a1a2c462198c1624515611e822ade773b}\label{gcode_8py_a1a2c462198c1624515611e822ade773b}} 
+float {\bfseries gcode.\+FEED\+\_\+\+CONVERSION} = 0.\+001666
+\item 
+\mbox{\Hypertarget{gcode_8py_a2db20b4bfd9569a5b9dae1305c71dabc}\label{gcode_8py_a2db20b4bfd9569a5b9dae1305c71dabc}} 
+def {\bfseries gcode.\+points} = get\+\_\+instructions(\char`\"{}../flower.\+nc\char`\"{})
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Contains definitions for G code instruction object and basic translation functions. 
+
+\begin{DoxyAuthor}{Author}
+Lucas Sandsor 
+
+Jack Barone 
+
+Jackson Meyers 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+22-\/Feb-\/2022 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{gcode_8py_abc50f90163fd256df91076f274eb89d3}\label{gcode_8py_abc50f90163fd256df91076f274eb89d3}} 
+\index{gcode.py@{gcode.py}!abs\_to\_rel@{abs\_to\_rel}}
+\index{abs\_to\_rel@{abs\_to\_rel}!gcode.py@{gcode.py}}
+\doxysubsubsection{\texorpdfstring{abs\_to\_rel()}{abs\_to\_rel()}}
+{\footnotesize\ttfamily def gcode.\+abs\+\_\+to\+\_\+rel (\begin{DoxyParamCaption}\item[{}]{current\+\_\+pos,  }\item[{}]{x,  }\item[{}]{y }\end{DoxyParamCaption})}
+
+
+
+Converts a point in absolute space, to a point relative to the passed position. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em current\+\_\+pos} & The position that serves as the origin of the relative point. \\
+\hline
+{\em x} & The absolute x value of the point to be converted. \\
+\hline
+{\em y} & The absolute y value of the point to be converted. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{gcode_8py_a70e7b7facb6f8136976acb2b33a1692c}\label{gcode_8py_a70e7b7facb6f8136976acb2b33a1692c}} 
+\index{gcode.py@{gcode.py}!apply\_offset@{apply\_offset}}
+\index{apply\_offset@{apply\_offset}!gcode.py@{gcode.py}}
+\doxysubsubsection{\texorpdfstring{apply\_offset()}{apply\_offset()}}
+{\footnotesize\ttfamily def gcode.\+apply\+\_\+offset (\begin{DoxyParamCaption}\item[{}]{point }\end{DoxyParamCaption})}
+
+
+
+Applies an offset to convert from absolute space to the robot\textquotesingle{}s drawing space. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em point} & The point to apply the offset to. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{gcode_8py_a02f8aad5c89616a2908cfa9c015b32bc}\label{gcode_8py_a02f8aad5c89616a2908cfa9c015b32bc}} 
+\index{gcode.py@{gcode.py}!arc@{arc}}
+\index{arc@{arc}!gcode.py@{gcode.py}}
+\doxysubsubsection{\texorpdfstring{arc()}{arc()}}
+{\footnotesize\ttfamily def gcode.\+arc (\begin{DoxyParamCaption}\item[{}]{pos,  }\item[{}]{direction,  }\item[{}]{i,  }\item[{}]{j,  }\item[{}]{pen,  }\item[{}]{feed,  }\item[{}]{x\+\_\+rel = {\ttfamily 0},  }\item[{}]{y\+\_\+rel = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Generates and returns the set of points to draw an arc. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & The starting position of the arc. \\
+\hline
+{\em direction} & The direction of the arc, 0 for clockwise, 1 for counter-\/clockwise. \\
+\hline
+{\em i} & The x position of the center of the arc. \\
+\hline
+{\em j} & The y position of the center of the arc. \\
+\hline
+{\em pen} & The state of the pen. 1 for pen down, 5 for pen up. \\
+\hline
+{\em feed} & The feed rate of the operation. Given in inches per minute. \\
+\hline
+{\em x\+\_\+rel} & The x coordinate of the arc\textquotesingle{}s end point. \\
+\hline
+{\em y\+\_\+rel} & The y coordinate of the arc\textquotesingle{}s end point. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{gcode_8py_a56a564e5a109ca497e01bdc4b43ef0de}\label{gcode_8py_a56a564e5a109ca497e01bdc4b43ef0de}} 
+\index{gcode.py@{gcode.py}!arcr@{arcr}}
+\index{arcr@{arcr}!gcode.py@{gcode.py}}
+\doxysubsubsection{\texorpdfstring{arcr()}{arcr()}}
+{\footnotesize\ttfamily def gcode.\+arcr (\begin{DoxyParamCaption}\item[{}]{pos,  }\item[{}]{direction,  }\item[{}]{r,  }\item[{}]{pen,  }\item[{}]{feed,  }\item[{}]{x\+\_\+rel = {\ttfamily 0},  }\item[{}]{y\+\_\+rel = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+
+
+Generates and returns the set of points to draw an arc. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & The starting position of the arc. \\
+\hline
+{\em direction} & The direction of the arc, 0 for clockwise, 1 for counter-\/clockwise. \\
+\hline
+{\em r} & The radius of the circle. A negative value will draw the short arc for the given value, while a positive value will draw the long arc. \\
+\hline
+{\em pen} & The state of the pen. 1 for pen down, 5 for pen up. \\
+\hline
+{\em feed} & The feed rate of the operation. Given in inches per minute. \\
+\hline
+{\em x\+\_\+rel} & The x coordinate of the arc\textquotesingle{}s end point. \\
+\hline
+{\em y\+\_\+rel} & The y coordinate of the arc\textquotesingle{}s end point. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{gcode_8py_a72048bc6eefd222f272017199ab55152}\label{gcode_8py_a72048bc6eefd222f272017199ab55152}} 
+\index{gcode.py@{gcode.py}!distance@{distance}}
+\index{distance@{distance}!gcode.py@{gcode.py}}
+\doxysubsubsection{\texorpdfstring{distance()}{distance()}}
+{\footnotesize\ttfamily def gcode.\+distance (\begin{DoxyParamCaption}\item[{}]{start,  }\item[{}]{end }\end{DoxyParamCaption})}
+
+
+
+Calculates the distance between two points. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em start} & 2D or 3D point at the starting position. \\
+\hline
+{\em end} & 2D or 3D point at the ending position. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{gcode_8py_a39aef5541b0b5661e4186ce006a6e7a1}\label{gcode_8py_a39aef5541b0b5661e4186ce006a6e7a1}} 
+\index{gcode.py@{gcode.py}!execute@{execute}}
+\index{execute@{execute}!gcode.py@{gcode.py}}
+\doxysubsubsection{\texorpdfstring{execute()}{execute()}}
+{\footnotesize\ttfamily def gcode.\+execute (\begin{DoxyParamCaption}\item[{}]{instruction,  }\item[{}]{position,  }\item[{}]{settings }\end{DoxyParamCaption})}
+
+
+
+Generates the points for a given instruction. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em instruction} & The instruction to be run. \\
+\hline
+{\em position} & The current position of the pen. \\
+\hline
+{\em settings} & g\+\_\+code\+\_\+settings object with this program\textquotesingle{}s current settings. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{gcode_8py_a208d1f9c0bc5ad0c81ae955a33fef845}\label{gcode_8py_a208d1f9c0bc5ad0c81ae955a33fef845}} 
+\index{gcode.py@{gcode.py}!find\_i@{find\_i}}
+\index{find\_i@{find\_i}!gcode.py@{gcode.py}}
+\doxysubsubsection{\texorpdfstring{find\_i()}{find\_i()}}
+{\footnotesize\ttfamily def gcode.\+find\+\_\+i (\begin{DoxyParamCaption}\item[{}]{r,  }\item[{}]{j }\end{DoxyParamCaption})}
+
+
+
+Calculates the x coordinate of the center of the arc, based on the radius and the center\textquotesingle{}s y coordinate. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The radius of the circle in inches. \\
+\hline
+{\em j} & The y coordinate of the center point, calculated using \mbox{\hyperlink{gcode_8py_a11b7b7dbdf4f7422b1bd054f105f4d32}{find\+\_\+j()}}. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{gcode_8py_a11b7b7dbdf4f7422b1bd054f105f4d32}\label{gcode_8py_a11b7b7dbdf4f7422b1bd054f105f4d32}} 
+\index{gcode.py@{gcode.py}!find\_j@{find\_j}}
+\index{find\_j@{find\_j}!gcode.py@{gcode.py}}
+\doxysubsubsection{\texorpdfstring{find\_j()}{find\_j()}}
+{\footnotesize\ttfamily def gcode.\+find\+\_\+j (\begin{DoxyParamCaption}\item[{}]{r,  }\item[{}]{x,  }\item[{}]{y }\end{DoxyParamCaption})}
+
+
+
+Calculates the y coordinate of the center of an arc based on the radius and end point. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em r} & The radius in inches. \\
+\hline
+{\em x} & The x coordinate of the end point. \\
+\hline
+{\em y} & The y coordinate of the end point.\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{gcode_8py_aa57c580bc38c26814fd9863d9cd10ec9}\label{gcode_8py_aa57c580bc38c26814fd9863d9cd10ec9}} 
+\index{gcode.py@{gcode.py}!get\_instructions@{get\_instructions}}
+\index{get\_instructions@{get\_instructions}!gcode.py@{gcode.py}}
+\doxysubsubsection{\texorpdfstring{get\_instructions()}{get\_instructions()}}
+{\footnotesize\ttfamily def gcode.\+get\+\_\+instructions (\begin{DoxyParamCaption}\item[{}]{filepath }\end{DoxyParamCaption})}
+
+
+
+Opens a g code file and gets a list of all the instructions. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em filepath} & Path to .nc file. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{gcode_8py_a93d5dc4bbe6cc25e253b9c2fe8e1636e}\label{gcode_8py_a93d5dc4bbe6cc25e253b9c2fe8e1636e}} 
+\index{gcode.py@{gcode.py}!linear@{linear}}
+\index{linear@{linear}!gcode.py@{gcode.py}}
+\doxysubsubsection{\texorpdfstring{linear()}{linear()}}
+{\footnotesize\ttfamily def gcode.\+linear (\begin{DoxyParamCaption}\item[{}]{pos,  }\item[{}]{x\+\_\+rel,  }\item[{}]{y\+\_\+rel,  }\item[{}]{pen,  }\item[{}]{feed = {\ttfamily -\/1} }\end{DoxyParamCaption})}
+
+
+
+Generates the set of points for drawing a line. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em pos} & The position of the pen at the beginning of the line. \\
+\hline
+{\em x\+\_\+rel} & The X coordinate of the line\textquotesingle{}s end point. \\
+\hline
+{\em y\+\_\+rel} & The Y coordinate of the line\textquotesingle{}e end point. \\
+\hline
+{\em pen} & The duty cycle of the pen servo for this operation. \\
+\hline
+{\em feed} & The feed rate of the operation. If feed is -\/1, will perform a full-\/speed move \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{gcode_8py_ab76eccd212aa17f7fca7314695f9ce00}\label{gcode_8py_ab76eccd212aa17f7fca7314695f9ce00}} 
+\index{gcode.py@{gcode.py}!rel\_to\_abs@{rel\_to\_abs}}
+\index{rel\_to\_abs@{rel\_to\_abs}!gcode.py@{gcode.py}}
+\doxysubsubsection{\texorpdfstring{rel\_to\_abs()}{rel\_to\_abs()}}
+{\footnotesize\ttfamily def gcode.\+rel\+\_\+to\+\_\+abs (\begin{DoxyParamCaption}\item[{}]{current\+\_\+pos,  }\item[{}]{x,  }\item[{}]{y }\end{DoxyParamCaption})}
+
+
+
+Converts a point in relative space to absolute space. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em current\+\_\+pos} & Position that serves as the origin of the relative point. \\
+\hline
+{\em x} & The relative x value of the point to be converted. \\
+\hline
+{\em y} & The relative y value of the point to be converted. \\
+\hline
+\end{DoxyParams}

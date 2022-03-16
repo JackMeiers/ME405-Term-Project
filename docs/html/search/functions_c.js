@@ -1,8 +1,9 @@
 var searchData=
 [
-  ['task0_5fmaster_0',['task0_master',['../main_8py.html#ab5fe659b65a916c6c048a7e9a8f25d41',1,'main']]],
-  ['task1_5fencoder1_1',['task1_encoder1',['../main_8py.html#a32635a29e04e95ad9e6553196a4b0cfc',1,'main']]],
-  ['task3_5fcontrol1_2',['task3_control1',['../main_8py.html#a8c0995cae91dd24b36e4e211d4ec13c0',1,'main']]],
-  ['task4_5fencoder2_3',['task4_encoder2',['../main_8py.html#a2bc81b8534a42f803558eceb49eac35c',1,'main']]],
-  ['task7_5fservo_4',['task7_servo',['../main_8py.html#a680cdb56a9dcecc34a63c21c3786d5a1',1,'main']]]
+  ['schedule_0',['schedule',['../classcotask_1_1_task.html#af60def0ed4a1bc5fec32f3cf8b8a90c8',1,'cotask::Task']]],
+  ['set_5fduty_5fcycle_1',['set_duty_cycle',['../classmotor_driver_1_1_motor_driver.html#adf635c9f46cbdcecb4269ff9ea071d3b',1,'motorDriver.MotorDriver.set_duty_cycle()'],['../classservo_driver_1_1_servo_driver.html#a76bb71a50493144294a885d727e64abb',1,'servoDriver.ServoDriver.set_duty_cycle()']]],
+  ['set_5fgain_2',['set_gain',['../classcontrols_1_1_controls.html#a6fd482a7e96471086e22e5f9a9d05998',1,'controls::Controls']]],
+  ['set_5fsetpoint_3',['set_setpoint',['../classcontrols_1_1_controls.html#a66079f5f7db57e443b900fab2a3b5c9d',1,'controls::Controls']]],
+  ['show_5fall_4',['show_all',['../task__share_8py.html#a130cad0bc96d3138e77344ea85586b7c',1,'task_share']]],
+  ['store_5flist_5',['store_list',['../classcontrols_1_1_controls.html#ac1dc9482b2aa073df57ed36e9163ce60',1,'controls::Controls']]]
 ];

@@ -1,0 +1,50 @@
+\hypertarget{kinematics_8py}{}\doxysection{C\+:/\+Users/15303/\+Documents/\+Git\+Hub/\+ME405-\/\+Term-\/\+Project/src/kinematics.py File Reference}
+\label{kinematics_8py}\index{C:/Users/15303/Documents/GitHub/ME405-\/Term-\/Project/src/kinematics.py@{C:/Users/15303/Documents/GitHub/ME405-\/Term-\/Project/src/kinematics.py}}
+
+
+This file contains information for the kinematics of the system and how we got the values for the arm movement.  
+
+
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{kinematics_8py_ac99879b064c91a3291e3e1c450817d11}{kinematics.\+convert\+To\+Encoder\+Angles}} (x, y)
+\begin{DoxyCompactList}\small\item\em based off the kinematic equations created in kinematics.\+PNG Barage of print statements was for troubleshooting as the math in image was off and we did not account for the offset fo the pen not being at the junction bearing. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{kinematics_8py_a3529f366d99a5caac3b90e21974d0cea}\label{kinematics_8py_a3529f366d99a5caac3b90e21974d0cea}} 
+def {\bfseries kinematics.\+arccos} (radians)
+\begin{DoxyCompactList}\small\item\em Created a new arccos using math.\+acos with improvements for usage as acos assumes you use values adjusted for domains. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{kinematics_8py_a8894f4dcb1fb4ca263f2722c55e961a5}\label{kinematics_8py_a8894f4dcb1fb4ca263f2722c55e961a5}} 
+def {\bfseries kinematics.\+radians} = convert\+To\+Encoder\+Angles(-\/2, 10)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This file contains information for the kinematics of the system and how we got the values for the arm movement. 
+
+\begin{DoxyAuthor}{Author}
+Lucas Sandsor 
+
+Jack Barone 
+
+Jackson Myers 
+\end{DoxyAuthor}
+\begin{DoxyDate}{Date}
+26-\/Feb-\/2022 
+\end{DoxyDate}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{kinematics_8py_ac99879b064c91a3291e3e1c450817d11}\label{kinematics_8py_ac99879b064c91a3291e3e1c450817d11}} 
+\index{kinematics.py@{kinematics.py}!convertToEncoderAngles@{convertToEncoderAngles}}
+\index{convertToEncoderAngles@{convertToEncoderAngles}!kinematics.py@{kinematics.py}}
+\doxysubsubsection{\texorpdfstring{convertToEncoderAngles()}{convertToEncoderAngles()}}
+{\footnotesize\ttfamily def kinematics.\+convert\+To\+Encoder\+Angles (\begin{DoxyParamCaption}\item[{}]{x,  }\item[{}]{y }\end{DoxyParamCaption})}
+
+
+
+based off the kinematic equations created in kinematics.\+PNG Barage of print statements was for troubleshooting as the math in image was off and we did not account for the offset fo the pen not being at the junction bearing. 
+
+@retuns Tuple containing the angle for the first encoder and the angle for the second encoder 
