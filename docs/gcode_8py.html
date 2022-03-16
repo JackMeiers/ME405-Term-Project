@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>ME405 Term Project: gcode.py File Reference</title>
+<title>ME 405 Term Project (Mecha - 03): src/gcode.py File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -25,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">ME405 Term Project
+   <div id="projectname">ME 405 Term Project (Mecha - 03)
    </div>
   </td>
  </tr>
@@ -98,18 +98,54 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgcode_1_1g__code__instruction.html">gcode.g_code_instruction</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Defines a basic structure for holding G code instructions.  <a href="classgcode_1_1g__code__instruction.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgcode_1_1g__code__settings.html">gcode.g_code_settings</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds settings between function runs.  <a href="classgcode_1_1g__code__settings.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:aa57c580bc38c26814fd9863d9cd10ec9"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gcode_8py.html#aa57c580bc38c26814fd9863d9cd10ec9">gcode.get_instructions</a> (filepath)</td></tr>
 <tr class="memdesc:aa57c580bc38c26814fd9863d9cd10ec9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens a g code file and gets a list of all the instructions.  <a href="gcode_8py.html#aa57c580bc38c26814fd9863d9cd10ec9">More...</a><br /></td></tr>
 <tr class="separator:aa57c580bc38c26814fd9863d9cd10ec9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39aef5541b0b5661e4186ce006a6e7a1"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gcode_8py.html#a39aef5541b0b5661e4186ce006a6e7a1">gcode.execute</a> (instruction, position, settings)</td></tr>
+<tr class="memdesc:a39aef5541b0b5661e4186ce006a6e7a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the points for a given instruction.  <a href="gcode_8py.html#a39aef5541b0b5661e4186ce006a6e7a1">More...</a><br /></td></tr>
+<tr class="separator:a39aef5541b0b5661e4186ce006a6e7a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72048bc6eefd222f272017199ab55152"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gcode_8py.html#a72048bc6eefd222f272017199ab55152">gcode.distance</a> (start, end)</td></tr>
+<tr class="memdesc:a72048bc6eefd222f272017199ab55152"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the distance between two points.  <a href="gcode_8py.html#a72048bc6eefd222f272017199ab55152">More...</a><br /></td></tr>
+<tr class="separator:a72048bc6eefd222f272017199ab55152"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93d5dc4bbe6cc25e253b9c2fe8e1636e"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gcode_8py.html#a93d5dc4bbe6cc25e253b9c2fe8e1636e">gcode.linear</a> (pos, x_rel, y_rel, pen, feed=-1)</td></tr>
+<tr class="memdesc:a93d5dc4bbe6cc25e253b9c2fe8e1636e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates the set of points for drawing a line.  <a href="gcode_8py.html#a93d5dc4bbe6cc25e253b9c2fe8e1636e">More...</a><br /></td></tr>
+<tr class="separator:a93d5dc4bbe6cc25e253b9c2fe8e1636e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02f8aad5c89616a2908cfa9c015b32bc"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gcode_8py.html#a02f8aad5c89616a2908cfa9c015b32bc">gcode.arc</a> (pos, direction, i, j, pen, feed, x_rel=0, y_rel=0)</td></tr>
+<tr class="memdesc:a02f8aad5c89616a2908cfa9c015b32bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates and returns the set of points to draw an arc.  <a href="gcode_8py.html#a02f8aad5c89616a2908cfa9c015b32bc">More...</a><br /></td></tr>
+<tr class="separator:a02f8aad5c89616a2908cfa9c015b32bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a11b7b7dbdf4f7422b1bd054f105f4d32"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gcode_8py.html#a11b7b7dbdf4f7422b1bd054f105f4d32">gcode.find_j</a> (r, x, y)</td></tr>
+<tr class="memdesc:a11b7b7dbdf4f7422b1bd054f105f4d32"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the y coordinate of the center of an arc based on the radius and end point.  <a href="gcode_8py.html#a11b7b7dbdf4f7422b1bd054f105f4d32">More...</a><br /></td></tr>
+<tr class="separator:a11b7b7dbdf4f7422b1bd054f105f4d32"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a208d1f9c0bc5ad0c81ae955a33fef845"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gcode_8py.html#a208d1f9c0bc5ad0c81ae955a33fef845">gcode.find_i</a> (r, j)</td></tr>
+<tr class="memdesc:a208d1f9c0bc5ad0c81ae955a33fef845"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculates the x coordinate of the center of the arc, based on the radius and the center's y coordinate.  <a href="gcode_8py.html#a208d1f9c0bc5ad0c81ae955a33fef845">More...</a><br /></td></tr>
+<tr class="separator:a208d1f9c0bc5ad0c81ae955a33fef845"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a56a564e5a109ca497e01bdc4b43ef0de"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gcode_8py.html#a56a564e5a109ca497e01bdc4b43ef0de">gcode.arcr</a> (pos, direction, r, pen, feed, x_rel=0, y_rel=0)</td></tr>
+<tr class="memdesc:a56a564e5a109ca497e01bdc4b43ef0de"><td class="mdescLeft">&#160;</td><td class="mdescRight">Generates and returns the set of points to draw an arc.  <a href="gcode_8py.html#a56a564e5a109ca497e01bdc4b43ef0de">More...</a><br /></td></tr>
+<tr class="separator:a56a564e5a109ca497e01bdc4b43ef0de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abc50f90163fd256df91076f274eb89d3"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gcode_8py.html#abc50f90163fd256df91076f274eb89d3">gcode.abs_to_rel</a> (current_pos, x, y)</td></tr>
+<tr class="memdesc:abc50f90163fd256df91076f274eb89d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a point in absolute space, to a point relative to the passed position.  <a href="gcode_8py.html#abc50f90163fd256df91076f274eb89d3">More...</a><br /></td></tr>
+<tr class="separator:abc50f90163fd256df91076f274eb89d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab76eccd212aa17f7fca7314695f9ce00"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gcode_8py.html#ab76eccd212aa17f7fca7314695f9ce00">gcode.rel_to_abs</a> (current_pos, x, y)</td></tr>
+<tr class="memdesc:ab76eccd212aa17f7fca7314695f9ce00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a point in relative space to absolute space.  <a href="gcode_8py.html#ab76eccd212aa17f7fca7314695f9ce00">More...</a><br /></td></tr>
+<tr class="separator:ab76eccd212aa17f7fca7314695f9ce00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70e7b7facb6f8136976acb2b33a1692c"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="gcode_8py.html#a70e7b7facb6f8136976acb2b33a1692c">gcode.apply_offset</a> (point)</td></tr>
+<tr class="memdesc:a70e7b7facb6f8136976acb2b33a1692c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Applies an offset to convert from absolute space to the robot's drawing space.  <a href="gcode_8py.html#a70e7b7facb6f8136976acb2b33a1692c">More...</a><br /></td></tr>
+<tr class="separator:a70e7b7facb6f8136976acb2b33a1692c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="var-members" name="var-members"></a>
 Variables</h2></td></tr>
-<tr class="memitem:a4984c5dc9a6ee4b91a58e12a6e056625"><td class="memItemLeft" align="right" valign="top"><a id="a4984c5dc9a6ee4b91a58e12a6e056625" name="a4984c5dc9a6ee4b91a58e12a6e056625"></a>
-def&#160;</td><td class="memItemRight" valign="bottom"><b>gcode.instr</b> = get_instructions(&quot;../sample2.nc&quot;)</td></tr>
-<tr class="separator:a4984c5dc9a6ee4b91a58e12a6e056625"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a2c462198c1624515611e822ade773b"><td class="memItemLeft" align="right" valign="top"><a id="a1a2c462198c1624515611e822ade773b" name="a1a2c462198c1624515611e822ade773b"></a>
+float&#160;</td><td class="memItemRight" valign="bottom"><b>gcode.FEED_CONVERSION</b> = 0.001666</td></tr>
+<tr class="separator:a1a2c462198c1624515611e822ade773b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2db20b4bfd9569a5b9dae1305c71dabc"><td class="memItemLeft" align="right" valign="top"><a id="a2db20b4bfd9569a5b9dae1305c71dabc" name="a2db20b4bfd9569a5b9dae1305c71dabc"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>gcode.points</b> = get_instructions(&quot;../flower.nc&quot;)</td></tr>
+<tr class="separator:a2db20b4bfd9569a5b9dae1305c71dabc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p >Contains definitions for G code instruction object and basic translation functions. </p>
@@ -120,6 +156,390 @@ Jack Barone </dd>
 Jackson Meyers </dd></dl>
 <dl class="section date"><dt>Date</dt><dd>22-Feb-2022 </dd></dl>
 </div><h2 class="groupheader">Function Documentation</h2>
+<a id="abc50f90163fd256df91076f274eb89d3" name="abc50f90163fd256df91076f274eb89d3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abc50f90163fd256df91076f274eb89d3">&#9670;&nbsp;</a></span>abs_to_rel()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def gcode.abs_to_rel </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>current_pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converts a point in absolute space, to a point relative to the passed position. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">current_pos</td><td>The position that serves as the origin of the relative point. </td></tr>
+    <tr><td class="paramname">x</td><td>The absolute x value of the point to be converted. </td></tr>
+    <tr><td class="paramname">y</td><td>The absolute y value of the point to be converted. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a70e7b7facb6f8136976acb2b33a1692c" name="a70e7b7facb6f8136976acb2b33a1692c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70e7b7facb6f8136976acb2b33a1692c">&#9670;&nbsp;</a></span>apply_offset()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def gcode.apply_offset </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>point</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Applies an offset to convert from absolute space to the robot's drawing space. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">point</td><td>The point to apply the offset to. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a02f8aad5c89616a2908cfa9c015b32bc" name="a02f8aad5c89616a2908cfa9c015b32bc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a02f8aad5c89616a2908cfa9c015b32bc">&#9670;&nbsp;</a></span>arc()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def gcode.arc </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>direction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>i</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>j</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>pen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>feed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x_rel</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>y_rel</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates and returns the set of points to draw an arc. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>The starting position of the arc. </td></tr>
+    <tr><td class="paramname">direction</td><td>The direction of the arc, 0 for clockwise, 1 for counter-clockwise. </td></tr>
+    <tr><td class="paramname">i</td><td>The x position of the center of the arc. </td></tr>
+    <tr><td class="paramname">j</td><td>The y position of the center of the arc. </td></tr>
+    <tr><td class="paramname">pen</td><td>The state of the pen. 1 for pen down, 5 for pen up. </td></tr>
+    <tr><td class="paramname">feed</td><td>The feed rate of the operation. Given in inches per minute. </td></tr>
+    <tr><td class="paramname">x_rel</td><td>The x coordinate of the arc's end point. </td></tr>
+    <tr><td class="paramname">y_rel</td><td>The y coordinate of the arc's end point. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a56a564e5a109ca497e01bdc4b43ef0de" name="a56a564e5a109ca497e01bdc4b43ef0de"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a56a564e5a109ca497e01bdc4b43ef0de">&#9670;&nbsp;</a></span>arcr()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def gcode.arcr </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>direction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>pen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>feed</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x_rel</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>y_rel</em> = <code>0</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates and returns the set of points to draw an arc. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>The starting position of the arc. </td></tr>
+    <tr><td class="paramname">direction</td><td>The direction of the arc, 0 for clockwise, 1 for counter-clockwise. </td></tr>
+    <tr><td class="paramname">r</td><td>The radius of the circle. A negative value will draw the short arc for the given value, while a positive value will draw the long arc. </td></tr>
+    <tr><td class="paramname">pen</td><td>The state of the pen. 1 for pen down, 5 for pen up. </td></tr>
+    <tr><td class="paramname">feed</td><td>The feed rate of the operation. Given in inches per minute. </td></tr>
+    <tr><td class="paramname">x_rel</td><td>The x coordinate of the arc's end point. </td></tr>
+    <tr><td class="paramname">y_rel</td><td>The y coordinate of the arc's end point. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a72048bc6eefd222f272017199ab55152" name="a72048bc6eefd222f272017199ab55152"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72048bc6eefd222f272017199ab55152">&#9670;&nbsp;</a></span>distance()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def gcode.distance </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>end</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the distance between two points. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">start</td><td>2D or 3D point at the starting position. </td></tr>
+    <tr><td class="paramname">end</td><td>2D or 3D point at the ending position. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a39aef5541b0b5661e4186ce006a6e7a1" name="a39aef5541b0b5661e4186ce006a6e7a1"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a39aef5541b0b5661e4186ce006a6e7a1">&#9670;&nbsp;</a></span>execute()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def gcode.execute </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>instruction</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>position</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>settings</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates the points for a given instruction. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">instruction</td><td>The instruction to be run. </td></tr>
+    <tr><td class="paramname">position</td><td>The current position of the pen. </td></tr>
+    <tr><td class="paramname">settings</td><td>g_code_settings object with this program's current settings. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a208d1f9c0bc5ad0c81ae955a33fef845" name="a208d1f9c0bc5ad0c81ae955a33fef845"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a208d1f9c0bc5ad0c81ae955a33fef845">&#9670;&nbsp;</a></span>find_i()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def gcode.find_i </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>j</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the x coordinate of the center of the arc, based on the radius and the center's y coordinate. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>The radius of the circle in inches. </td></tr>
+    <tr><td class="paramname">j</td><td>The y coordinate of the center point, calculated using <a class="el" href="gcode_8py.html#a11b7b7dbdf4f7422b1bd054f105f4d32" title="Calculates the y coordinate of the center of an arc based on the radius and end point.">find_j()</a>. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a11b7b7dbdf4f7422b1bd054f105f4d32" name="a11b7b7dbdf4f7422b1bd054f105f4d32"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a11b7b7dbdf4f7422b1bd054f105f4d32">&#9670;&nbsp;</a></span>find_j()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def gcode.find_j </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculates the y coordinate of the center of an arc based on the radius and end point. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>The radius in inches. </td></tr>
+    <tr><td class="paramname">x</td><td>The x coordinate of the end point. </td></tr>
+    <tr><td class="paramname">y</td><td>The y coordinate of the end point.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+</div>
+</div>
 <a id="aa57c580bc38c26814fd9863d9cd10ec9" name="aa57c580bc38c26814fd9863d9cd10ec9"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa57c580bc38c26814fd9863d9cd10ec9">&#9670;&nbsp;</a></span>get_instructions()</h2>
 
@@ -146,12 +566,114 @@ Jackson Meyers </dd></dl>
 
 </div>
 </div>
+<a id="a93d5dc4bbe6cc25e253b9c2fe8e1636e" name="a93d5dc4bbe6cc25e253b9c2fe8e1636e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a93d5dc4bbe6cc25e253b9c2fe8e1636e">&#9670;&nbsp;</a></span>linear()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def gcode.linear </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x_rel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>y_rel</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>pen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>feed</em> = <code>-1</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Generates the set of points for drawing a line. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">pos</td><td>The position of the pen at the beginning of the line. </td></tr>
+    <tr><td class="paramname">x_rel</td><td>The X coordinate of the line's end point. </td></tr>
+    <tr><td class="paramname">y_rel</td><td>The Y coordinate of the line'e end point. </td></tr>
+    <tr><td class="paramname">pen</td><td>The duty cycle of the pen servo for this operation. </td></tr>
+    <tr><td class="paramname">feed</td><td>The feed rate of the operation. If feed is -1, will perform a full-speed move </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ab76eccd212aa17f7fca7314695f9ce00" name="ab76eccd212aa17f7fca7314695f9ce00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab76eccd212aa17f7fca7314695f9ce00">&#9670;&nbsp;</a></span>rel_to_abs()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def gcode.rel_to_abs </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>current_pos</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Converts a point in relative space to absolute space. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">current_pos</td><td>Position that serves as the origin of the relative point. </td></tr>
+    <tr><td class="paramname">x</td><td>The relative x value of the point to be converted. </td></tr>
+    <tr><td class="paramname">y</td><td>The relative y value of the point to be converted. </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="gcode_8py.html">gcode.py</a></li>
+    <li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li><li class="navelem"><a class="el" href="gcode_8py.html">gcode.py</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
   </ul>
 </div>

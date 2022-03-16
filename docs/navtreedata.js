@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "My Project", "index.html", [
+  [ "ME 405 Term Project (Mecha - 03)", "index.html", [
     [ "Howdy!", "index.html#wel", null ],
     [ "Source Code", "index.html#source", [
       [ "Diagram    Overview", "index.html#Task", null ],

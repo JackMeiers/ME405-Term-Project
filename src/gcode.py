@@ -1,8 +1,4 @@
-#import task_share
-import math as m
-
-'''!
-@file gcode.py
+'''!@file gcode.py
 @brief Contains definitions for G code instruction object and basic translation functions.
 
 @author Lucas Sandsor
@@ -10,6 +6,9 @@ import math as m
 @author Jackson Meyers
 @date 22-Feb-2022 
 '''
+
+#import task_share
+import math as m
 
 # conversion to have each step run in .1s.
 FEED_CONVERSION = 0.001666

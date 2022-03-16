@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['read_0',['read',['../classencoder_driver_1_1_encoder_driver.html#aff53189119c58a89253b96ba09f5cdf6',1,'encoderDriver::EncoderDriver']]],
-  ['ready_1',['ready',['../classcotask_1_1_task.html#a6102bc35d7cb1ce292abc85d4ddc23e1',1,'cotask::Task']]],
-  ['reset_5fprofile_2',['reset_profile',['../classcotask_1_1_task.html#a1bcbfa7dd7086112af20b7247ffa4a2e',1,'cotask::Task']]],
-  ['rr_5fsched_3',['rr_sched',['../classcotask_1_1_task_list.html#a01614098aedc87b465d5525c6ccb47ce',1,'cotask::TaskList']]]
+  ['pri_5fsched_0',['pri_sched',['../classcotask_1_1_task_list.html#a5f7b264614e8e22c28d4c1509e3f30d8',1,'cotask::TaskList']]],
+  ['print_5flist_1',['print_list',['../classcontrols_1_1_controls.html#a1e4385d4a485c931368deeb99f232208',1,'controls::Controls']]],
+  ['put_2',['put',['../classtask__share_1_1_queue.html#ae785bdf9d397d61729c22656471a81df',1,'task_share.Queue.put()'],['../classtask__share_1_1_share.html#ab449c261f259db176ffeea55ccbf5d96',1,'task_share.Share.put()']]]
 ];
