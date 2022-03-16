@@ -1,7 +1,7 @@
 '''!
-@file kinematics
-This file contains information for the kinematics of the 
-system and how we got the values for the arm movement
+@file kinematics.py
+@brief This file contains information for the kinematics of the system and how we got the values for the arm movement
+
 @author Lucas Sandsor
 @author Jack Barone
 @author Jackson Myers

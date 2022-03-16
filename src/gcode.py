@@ -3,7 +3,7 @@ import math as m
 
 '''!
 @file gcode.py
-Contains definitions for G code instruction object and basic translation functions.
+@brief Contains definitions for G code instruction object and basic translation functions.
 
 @author Lucas Sandsor
 @author Jack Barone
@@ -15,10 +15,10 @@ Contains definitions for G code instruction object and basic translation functio
 FEED_CONVERSION = 0.001666
 
 class g_code_instruction:
-    '''! Defines a basic structure for holding G code instructions.
+    '''! @brief Defines a basic structure for holding G code instructions.
     '''
     def __init__(self, line):
-        '''! Creates a new instruction object based on a line of G code.
+        '''! @brief Creates a new instruction object based on a line of G code.
         @param line String containing a single line of G code.
         '''
         self.n = 0
@@ -72,13 +72,13 @@ class g_code_instruction:
         # self.t # Tool commands. Shouldn't be necessary.
         
     def isRepeat(self):
-        '''! Returns whether the instruction is a repeat of previous instruction.
+        '''! @brief Returns whether the instruction is a repeat of previous instruction.
         '''
         return self.g == -1 and (self.x != 0 or self.y != 0 or self.i != 0 or self.j != 0 or self.r != 0)
 
 
 class g_code_settings:
-    '''! Holds settings between function runs.
+    '''! @brief Holds settings between function runs.
     '''
     def __init__(self):
         self.feed_rate = 60
@@ -87,7 +87,7 @@ class g_code_settings:
         self.pen = 5
 
 def get_instructions(filepath):
-    '''! Opens a g code file and gets a list of all the instructions.
+    '''! @brief Opens a g code file and gets a list of all the instructions.
         @param filepath Path to .nc file.
     '''
     instructions = []
@@ -113,7 +113,7 @@ def get_instructions(filepath):
     return positions
 
 def execute(instruction, position, settings):
-    '''!
+    '''! @brief Generates the points for a given instruction.
     @param instruction The instruction to be run.
     @param position The current position of the pen.
     @param settings g_code_settings object with this program's current settings.
@@ -195,7 +195,7 @@ def execute(instruction, position, settings):
         
 
 def distance(start, end):
-    '''! Calculates the distance between two points
+    '''! @brief Calculates the distance between two points
         @param start 2D or 3D point at the starting position.
         @param end 2D or 3D point at the ending position.
     '''
@@ -205,7 +205,7 @@ def distance(start, end):
     return m.sqrt(pow(delta_x,2) + pow(delta_y,2))
 
 def linear(pos, x_rel, y_rel, pen, feed=-1):
-    '''! Generates the set of points for drawing a line.
+    '''! @brief Generates the set of points for drawing a line.
         @param pos The position of the pen at the beginning of the line.
         @param x_rel The X coordinate of the line's end point.
         @param y_rel The Y coordinate of the line'e end point.
@@ -235,7 +235,7 @@ def linear(pos, x_rel, y_rel, pen, feed=-1):
     return points
 
 def arc(pos, direction, i, j, pen, feed, x_rel=0, y_rel=0):
-    '''! Generates and returns the set of points to draw an arc.
+    '''! @brief Generates and returns the set of points to draw an arc.
         @param pos The starting position of the arc.
         @param direction The direction of the arc, 0 for clockwise, 1 for counter-clockwise.
         @param i The x position of the center of the arc.
@@ -287,7 +287,7 @@ def arc(pos, direction, i, j, pen, feed, x_rel=0, y_rel=0):
     return points
 
 def find_j(r,x,y):
-    '''! Calculates the y coordinate of the center of an arc based on the radius and end point.
+    '''! @brief Calculates the y coordinate of the center of an arc based on the radius and end point.
     @param r The radius in inches.
     @param x The x coordinate of the end point.
     @param y The y coordinate of the end point.
@@ -305,17 +305,15 @@ def find_j(r,x,y):
     return num/denom
 
 def find_i(r,j):
-    '''! Calculates the x coordinate of the center of the arc, based on the radius and the center's y coordinate.
+    '''! @brief Calculates the x coordinate of the center of the arc, based on the radius and the center's y coordinate.
         @param r The radius of the circle in inches.
         @param j The y coordinate of the center point, calculated using find_j().
-        
-        @return
     '''
     return m.sqrt(r**2 - j**2)
 
     
 def arcr(pos, direction, r, pen, feed, x_rel=0, y_rel=0):
-    '''! Generates and returns the set of points to draw an arc.
+    '''! @brief Generates and returns the set of points to draw an arc.
         @param pos The starting position of the arc.
         @param direction The direction of the arc, 0 for clockwise, 1 for counter-clockwise.
         @param r The radius of the circle. A negative value will draw the short arc for the given value, while a positive value will draw the long arc.
@@ -371,7 +369,7 @@ def arcr(pos, direction, r, pen, feed, x_rel=0, y_rel=0):
     return points
     
 def abs_to_rel(current_pos, x, y):
-    '''! Converts a point in absolute space, to a point relative to the passed position.
+    '''! @brief Converts a point in absolute space, to a point relative to the passed position.
         @param current_pos The position that serves as the origin of the relative point.
         @param x The absolute x value of the point to be converted.
         @param y The absolute y value of the point to be converted.
@@ -379,7 +377,7 @@ def abs_to_rel(current_pos, x, y):
     return (x - current_pos[0], y - current_pos[1])
 
 def rel_to_abs(current_pos, x, y):
-    '''! Converts a point in relative space to absolute space.
+    '''! @brief Converts a point in relative space to absolute space.
         @param current_pos Position that serves as the origin of the relative point.
         @param x The relative x value of the point to be converted.
         @param y The relative y value of the point to be converted.
@@ -387,7 +385,7 @@ def rel_to_abs(current_pos, x, y):
     return (current_pos[0] + x, current_pos[1] + y)
 
 def apply_offset(point):
-    '''! Applies an offset to convert from absolute space to the robot's drawing space.
+    '''! @brief Applies an offset to convert from absolute space to the robot's drawing space.
         @param point The point to apply the offset to.
     '''
     return (point[0] - 2, point[1] + 15)
